@@ -18,6 +18,10 @@ import retrofit2.Response;
 public class RegisterActivity extends AppCompatActivity{
     private EditText usernameIn;
     private EditText passwordIn;
+    private EditText nombreIn;
+    private EditText apellidoIn;
+    private EditText gmailIn;
+    private EditText fechaNacimientoIn;
     private Button registerBttn;
 
 
@@ -28,7 +32,11 @@ public class RegisterActivity extends AppCompatActivity{
 
         usernameIn = findViewById(R.id.usernameIn);
         passwordIn = findViewById(R.id.passwordIn);
-        registerBttn = findViewById(R.id.registerBttn);
+        nombreIn = findViewById(R.id.nombreIn);
+        apellidoIn = findViewById(R.id.apellidoIn);
+        gmailIn = findViewById(R.id.gmailIn);
+        passwordIn = findViewById(R.id.passwordIn);
+        fechaNacimientoIn = findViewById(R.id.fechaNacimientoIn);
 
         registerBttn.setOnClickListener(v -> doRegister());
     }
@@ -36,13 +44,17 @@ public class RegisterActivity extends AppCompatActivity{
     private void doRegister(){
         String username=usernameIn.getText().toString();
         String password=passwordIn.getText().toString();
+        String nombre=nombreIn.getText().toString();
+        String apellido=apellidoIn.getText().toString();
+        String gmail=gmailIn.getText().toString();
+        String fechaNacimiento=fechaNacimientoIn.getText().toString();
 
-        if(username.isEmpty()||password.isEmpty()){
+        if(username.isEmpty()||password.isEmpty()||nombre.isEmpty()||apellido.isEmpty()||gmail.isEmpty()|fechaNacimiento.isEmpty()){
             Toast.makeText(this, "Por favor rellena todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Usuario usuario = new Usuario(username,password);
+        Usuario usuario = new Usuario(username,password,nombre,apellido,gmail,fechaNacimiento);
 
         // creamos servicio retrofit
         AuthService authService = RetrofitClient.getClient().create(AuthService.class);

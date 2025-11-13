@@ -1,4 +1,4 @@
-package edu.upc.dsa_android_DriveNdodge.ui;
+package edu.upc.dsa_android_DriveNdodge.UserInterface;
 
 import android.content.Intent;
 import android.os.Bundle;

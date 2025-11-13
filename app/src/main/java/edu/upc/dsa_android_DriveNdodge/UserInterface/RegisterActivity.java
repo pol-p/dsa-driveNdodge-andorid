@@ -37,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity{
         gmailIn = findViewById(R.id.gmailIn);
         passwordIn = findViewById(R.id.passwordIn);
         fechaNacimientoIn = findViewById(R.id.fechaNacimientoIn);
+        registerBttn = findViewById(R.id.registerBttn);
 
         registerBttn.setOnClickListener(v -> doRegister());
     }

@@ -5,9 +5,9 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 public interface AuthService {
-    @POST("/dsaApp/auth/register")
+    @POST("/v1/auth/register")
     Call<Usuario> register(@Body Usuario usuario);
 
-    @POST("/dsaApp/auth/login")
+    @POST("/v1/auth/login")
     Call<Usuario> login(@Body Usuario usuario);
 }

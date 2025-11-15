@@ -26,6 +26,8 @@
 
         <activity android:name=".UserInterface.RegisterActivity" />
         <activity android:name=".UserInterface.LoginActivity" />
+        <activity android:name=".UserInterface.ShopActivity" />
+
 
     </application>
 

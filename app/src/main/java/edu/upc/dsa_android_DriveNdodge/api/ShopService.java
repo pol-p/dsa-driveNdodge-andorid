@@ -1,0 +1,29 @@
+package edu.upc.dsa_android_DriveNdodge.api;
+
+import edu.upc.dsa_android_DriveNdodge.models.Item;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+
+import java.util.List;
+
+public interface ShopService {
+
+    @GET("/v1/shop/items")
+    Call<List<Item>> getItems();
+
+    @POST("/v1/shop/buy/{id}")
+    Call<Void> buyItem(@Path("id") Integer itemId, @Body String username);
+
+    public class MonedasResponse {
+        private int monedas;
+
+        public int getMonedas() { return monedas; }
+        public void setMonedas(int monedas) { this.monedas = monedas; }
+    }
+    @GET("/v1/shop/monedas/{username}")
+    Call<MonedasResponse> getMonedas(@Path("username") String username);
+
+}

@@ -2,6 +2,7 @@ package edu.upc.dsa_android_DriveNdodge.UserInterface;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,6 +19,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private static final String TAG = "LoginActivity"; // TAG per filtrar al Logcat
 
     private EditText usernameIn, passwordIn;
     private Button loginBttn;
@@ -38,7 +41,10 @@ public class LoginActivity extends AppCompatActivity {
         String username = usernameIn.getText().toString().toLowerCase();
         String password = passwordIn.getText().toString();
 
-        if(username.isEmpty()||password.isEmpty()) {
+        Log.d(TAG, "Iniciando login con username: " + username);
+
+        if(username.isEmpty() || password.isEmpty()) {
+            Log.d(TAG, "Campos vacíos: username o password");
             Toast.makeText(this, "Por favor rellena todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -53,17 +59,29 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if (response.isSuccessful()) {
-                    // servidor devuelve codigo 2xx
+                    Log.d(TAG, "Login exitoso para usuario: " + username);
+
+                    // guardamos valor de username para pasarlo al ShopActivity
+                    getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+                            .edit()
+                            .putString("username", username)
+                            .apply();
+
                     Toast.makeText(LoginActivity.this, "Se ha iniciado sesión correctamente", Toast.LENGTH_SHORT).show();
+
+                    // redirigir a ShopActivity
+                    Intent intent = new Intent(LoginActivity.this, ShopActivity.class);
+                    startActivity(intent);
                     finish();
                 } else {
-                    //servidor devuelve codigo de error 4xx o 500
+                    Log.d(TAG, "Login fallido: usuario o contraseña incorrectos");
                     Toast.makeText(LoginActivity.this, "Error: usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
+                Log.e(TAG, "Error de conexión al hacer login", t);
                 Toast.makeText(LoginActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

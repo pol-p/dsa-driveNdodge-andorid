@@ -1,63 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/register_layout"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:fillViewport="true"
     android:padding="24dp">
 
-    <EditText
-        android:id="@+id/usernameIn"
+    <LinearLayout
+        android:id="@+id/register_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Usuario"
-        android:inputType="textPersonName"
-        android:layout_marginBottom="16dp" />
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/passwordIn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
-        android:layout_marginBottom="16dp" />
+        <EditText
+            android:id="@+id/usernameIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Usuario"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="16dp" />
 
-    <EditText
-        android:id="@+id/nombreIn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nombre"
-        android:inputType="textPersonName"
-        android:layout_marginBottom="16dp" />
+        <EditText
+            android:id="@+id/passwordIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:layout_marginBottom="16dp" />
 
-    <EditText
-        android:id="@+id/apellidoIn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Apellido"
-        android:inputType="textPersonName"
-        android:layout_marginBottom="16dp" />
+        <EditText
+            android:id="@+id/passwordConfirmIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirmar Contraseña"
+            android:inputType="textPassword"
+            android:layout_marginBottom="16dp"/>
 
-    <EditText
-        android:id="@+id/gmailIn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Correo electrónico"
-        android:inputType="textEmailAddress"
-        android:layout_marginBottom="16dp" />
+        <EditText
+            android:id="@+id/nombreIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="16dp" />
 
-    <EditText
-        android:id="@+id/fechaNacimientoIn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Fecha de nacimiento (yyyy-mm-dd)"
-        android:inputType="date"
-        android:layout_marginBottom="24dp" />
+        <EditText
+            android:id="@+id/apellidoIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Apellido"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="16dp" />
 
-    <Button
-        android:id="@+id/registerBttn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Registrar" />
+        <EditText
+            android:id="@+id/gmailIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo electrónico"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="16dp" />
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="24dp"
+            android:weightSum="3">
+
+            <EditText
+                android:id="@+id/diaIn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="DD"
+                android:inputType="number"
+                android:maxLength="2" />
+
+            <EditText
+                android:id="@+id/mesIn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="MM"
+                android:inputType="number"
+                android:maxLength="2"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
+
+            <EditText
+                android:id="@+id/anoIn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="YYYY"
+                android:inputType="number"
+                android:maxLength="4" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/registerBttn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar" />
+
+    </LinearLayout>
+</ScrollView>

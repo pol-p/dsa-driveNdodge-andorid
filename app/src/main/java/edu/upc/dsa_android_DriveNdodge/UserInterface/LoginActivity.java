@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void doLogin() {
-        String username = usernameIn.getText().toString();
+        String username = usernameIn.getText().toString().toLowerCase();
         String password = passwordIn.getText().toString();
 
         if(username.isEmpty()||password.isEmpty()) {

@@ -34,20 +34,11 @@ proguard/
 # Android Studio captures folder
 captures/
 
-# IntelliJ
+# IntelliJ / Android Studio
+.idea/
 *.iml
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/gradle.xml
-.idea/assetWizardSettings.xml
-.idea/dictionaries
-.idea/libraries
-.idea/jarRepositories.xml
-.idea/caches
-.idea/modules.xml
-.idea/navEditor.xml
-.idea/misc.xml
-.idea/.name
+.vscode/
+
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
 # .idea/navEditor.xml
 
@@ -94,4 +85,3 @@ lint/tmp/
 # Backup files
 *.bak
 *~
-

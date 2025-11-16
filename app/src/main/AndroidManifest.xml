@@ -15,8 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DSA_Android"
         android:usesCleartextTraffic="true">
+
         <activity
-            android:name=".MainActivity"
+            android:name=".UserInterface.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +25,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".MainActivity" />
         <activity android:name=".UserInterface.RegisterActivity" />
         <activity android:name=".UserInterface.LoginActivity" />
         <activity android:name=".UserInterface.ShopActivity" />

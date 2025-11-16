@@ -1,9 +1,11 @@
 package edu.upc.dsa_android_DriveNdodge.UserInterface;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.upc.dsa_android_DriveNdodge.MainActivity;
 import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.api.ShopService;
@@ -47,6 +50,9 @@ public class ShopActivity extends AppCompatActivity {
 
         loadCoins();
         loadItems();
+
+        Button logoutButton = findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(v -> logout());
     }
 
     private void loadItems() {
@@ -145,5 +151,18 @@ public class ShopActivity extends AppCompatActivity {
                 Toast.makeText(ShopActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void logout(){
+        Log.d("SplashActivity", "Cerrando sesión...");
+
+        getSharedPreferences("MyAppPrefs", MODE_PRIVATE).edit().clear().apply();
+
+        Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
+
+        // Ir a pantalla del MainActivity
+        Intent intent = new Intent(ShopActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 }

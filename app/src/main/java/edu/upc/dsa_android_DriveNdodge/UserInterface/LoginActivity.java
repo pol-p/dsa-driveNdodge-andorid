@@ -58,13 +58,16 @@ public class LoginActivity extends AppCompatActivity {
         authService.login(usuario).enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && response.body() != null) {
                     Log.d(TAG, "Login exitoso para usuario: " + username);
+
+                    String returnedUsername = response.body().getUsername();
+                    if (returnedUsername == null || returnedUsername.isEmpty()) returnedUsername = username;
 
                     // guardamos valor de username para pasarlo al ShopActivity
                     getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
                             .edit()
-                            .putString("username", username)
+                            .putString("username", returnedUsername)
                             .apply();
 
                     Toast.makeText(LoginActivity.this, "Se ha iniciado sesión correctamente", Toast.LENGTH_SHORT).show();
@@ -74,7 +77,9 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    Log.d(TAG, "Login fallido: usuario o contraseña incorrectos");
+                    String errBody = "";
+                    try { if (response.errorBody() != null) errBody = response.errorBody().string(); } catch (Exception ignored) {}
+                    Log.d(TAG, "Login fallido: usuario o contraseña incorrectos - " + errBody);
                     Toast.makeText(LoginActivity.this, "Error: usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                 }
             }

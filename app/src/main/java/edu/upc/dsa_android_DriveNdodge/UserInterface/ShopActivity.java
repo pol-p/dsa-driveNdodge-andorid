@@ -113,6 +113,11 @@ public class ShopActivity extends AppCompatActivity {
                     int monedas = response.body().getMonedas();  // cojemos el valot de dentro el objecto JSON
                     Log.d("ShopActivity", "Monedas desde backend: " + monedas);
                     monedasActuales.setText("Monedas: " + monedas);
+
+                    getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+                            .edit()
+                            .putInt("monedas",monedas)
+                            .apply();
                 } else {
                     Toast.makeText(ShopActivity.this, "Error al cargar monedas", Toast.LENGTH_SHORT).show();
                 }

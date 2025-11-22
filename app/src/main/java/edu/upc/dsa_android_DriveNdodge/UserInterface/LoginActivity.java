@@ -41,10 +41,10 @@ public class LoginActivity extends AppCompatActivity {
         String username = usernameIn.getText().toString().toLowerCase();
         String password = passwordIn.getText().toString();
 
-        Log.d(TAG, "Iniciando login con username: " + username);
+        Log.i(TAG, "Iniciando login con username: " + username);
 
         if(username.isEmpty() || password.isEmpty()) {
-            Log.d(TAG, "Campos vacíos: username o password");
+            Log.i(TAG, "Campos vacíos: username o password");
             Toast.makeText(this, "Por favor rellena todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "Login exitoso para usuario: " + username);
+                    Log.i(TAG, "Login exitoso para usuario: " + username);
 
                     // guardamos valor de username para pasarlo al ShopActivity
                     getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    Log.d(TAG, "Login fallido: usuario o contraseña incorrectos");
+                    Log.i(TAG, "Login fallido: usuario o contraseña incorrectos");
                     Toast.makeText(LoginActivity.this, "Error: usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                 }
             }

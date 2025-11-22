@@ -55,18 +55,18 @@ public class RegisterActivity extends AppCompatActivity {
         String mes = mesIn.getText().toString();
         String ano = anoIn.getText().toString();
 
-        Log.d(TAG, "Intentando registrar usuario: " + username);
+        Log.i(TAG, "Intentando registrar usuario: " + username);
 
         if(username.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty() ||
                 nombre.isEmpty() || apellido.isEmpty() || gmail.isEmpty() ||
                 dia.isEmpty() || mes.isEmpty() || ano.isEmpty()) {
-            Log.d(TAG, "Campos vacíos en el formulario de registro");
+            Log.i(TAG, "Campos vacíos en el formulario de registro");
             Toast.makeText(this, "Por favor rellena todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if(!password.equals(passwordConfirm)) {
-            Log.d(TAG, "Contraseñas no coinciden para usuario: " + username);
+            Log.i(TAG, "Contraseñas no coinciden para usuario: " + username);
             Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -81,13 +81,13 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "Registro exitoso para usuario: " + username);
+                    Log.i(TAG, "Registro exitoso para usuario: " + username);
                     Toast.makeText(RegisterActivity.this, "Registro exitoso, ¡bienvenido!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    Log.d(TAG, "Error en registro: parámetros incorrectos o usuario ya existente");
+                    Log.i(TAG, "Error en registro: parámetros incorrectos o usuario ya existente");
                     Toast.makeText(RegisterActivity.this, "Error: parámetros mal pasados o usuario ya existente", Toast.LENGTH_SHORT).show();
                 }
             }

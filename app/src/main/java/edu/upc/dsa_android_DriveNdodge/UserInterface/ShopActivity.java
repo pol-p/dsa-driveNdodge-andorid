@@ -43,7 +43,7 @@ public class ShopActivity extends AppCompatActivity {
         // recuperamos username persona que ha iniciado sesión
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         username = prefs.getString("username", null);
-        Log.d(TAG, "Username actual: " + username);
+        Log.i(TAG, "Username actual: " + username);
 
         itemsListView = findViewById(R.id.itemsListView);
         monedasActuales = findViewById(R.id.monedasActuales);
@@ -59,14 +59,14 @@ public class ShopActivity extends AppCompatActivity {
         // creamos servicio retrofit
         ShopService shopService = RetrofitClient.getClient().create(ShopService.class);
         // llamar al endpoint getItems y ejecutar peticion HTTP GET
-        Log.d(TAG, "Cargando items desde backend...");
+        Log.i(TAG, "Cargando items desde backend...");
         shopService.getItems().enqueue(new Callback<List<Item>>() {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     //  backend responde con una lista de items, la guardamos en "items"
                     items = response.body();
-                    Log.d(TAG, "Items recibidos: " + items.size());
+                    Log.i(TAG, "Items recibidos: " + items.size());
 
                     // ArrayAdapter classe que nos sirve para conectar la lista de datos del backend a una lista que se podra mostrar visualmente
                     // de momento sirve para mostrarlo visualmente en formato lista
@@ -83,7 +83,7 @@ public class ShopActivity extends AppCompatActivity {
 
                     // click listener para cuando se pulse un item de la lista y se llama la funcion buiItem
                     itemsListView.setOnItemClickListener((parent, view, position, id) -> {
-                        Log.d(TAG, "Item seleccionado: " + items.get(position).getNombre() + " (ID: " + items.get(position).getId() + ")");
+                        Log.i(TAG, "Item seleccionado: " + items.get(position).getNombre() + " (ID: " + items.get(position).getId() + ")");
                         buyItem(items.get(position).getId());
                     });
 
@@ -105,13 +105,13 @@ public class ShopActivity extends AppCompatActivity {
         // creamos servicio retrofit
         ShopService shopService = RetrofitClient.getClient().create(ShopService.class);
         // llamar al endpoint getMonedas y ejecutar peticion HTTP GET
-        Log.d(TAG, "Cargando monedas para usuario: " + username);
+        Log.i(TAG, "Cargando monedas para usuario: " + username);
         shopService.getMonedas(username).enqueue(new Callback<ShopService.MonedasResponse>() {
             @Override
             public void onResponse(Call<ShopService.MonedasResponse> call, Response<ShopService.MonedasResponse> response) {
                 if(response.isSuccessful() && response.body() != null) {
                     int monedas = response.body().getMonedas();  // cojemos el valot de dentro el objecto JSON
-                    Log.d("ShopActivity", "Monedas desde backend: " + monedas);
+                    Log.i("ShopActivity", "Monedas desde backend: " + monedas);
                     monedasActuales.setText("Monedas: " + monedas);
 
                     getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
@@ -136,12 +136,12 @@ public class ShopActivity extends AppCompatActivity {
         // creamos servicio retrofit
         ShopService shopService = RetrofitClient.getClient().create(ShopService.class);
         // llamar al endpoint buyItem y ejecutar peticion HTTP POST
-        Log.d(TAG, "Intentando comprar item " + itemId + " para usuario: " + username);
+        Log.i(TAG, "Intentando comprar item " + itemId + " para usuario: " + username);
         shopService.buyItem(itemId, username).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()) {
-                    Log.d(TAG, "Compra realizada con éxito: item " + itemId);
+                    Log.i(TAG, "Compra realizada con éxito: item " + itemId);
                     Toast.makeText(ShopActivity.this, "Compra realizada con éxito", Toast.LENGTH_SHORT).show();
                     loadCoins();
                 } else {
@@ -158,7 +158,7 @@ public class ShopActivity extends AppCompatActivity {
         });
     }
     private void logout(){
-        Log.d("SplashActivity", "Cerrando sesión...");
+        Log.i("SplashActivity", "Cerrando sesión...");
 
         getSharedPreferences("MyAppPrefs", MODE_PRIVATE).edit().clear().apply();
 

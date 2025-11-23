@@ -4,15 +4,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.upc.dsa_android_DriveNdodge.MainActivity;
@@ -24,149 +25,121 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.util.stream.Collectors;
-
-
 public class ShopActivity extends AppCompatActivity {
 
-    private static final String TAG = "ShopActivity"; // TAG per filtrar al Logcat
-    private ListView itemsListView; // lista que se mostrara visualmente a la pantalla
-    private List<Item> items = new ArrayList<>();  // list que se llena con los items que se reciben del servidor
-    private String username; // username persona que ha inixiado sesión
-    private TextView monedasActuales; // valor se actualiza cuando compras un item
+    private RecyclerView recyclerView;
+    private ProgressBar progressBar;
+    private TextView monedasTextView;
+    private String username;
+    private ShopService shopService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
 
-        // recuperamos username persona que ha iniciado sesión
+        // 1. Obtener usuario
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         username = prefs.getString("username", null);
-        Log.i(TAG, "Username actual: " + username);
 
-        itemsListView = findViewById(R.id.itemsListView);
-        monedasActuales = findViewById(R.id.monedasActuales);
+        // 2. Inicializar Vistas
+        monedasTextView = findViewById(R.id.monedasActuales);
+        progressBar = findViewById(R.id.progressBar);
+        recyclerView = findViewById(R.id.recyclerViewShop);
 
-        loadCoins();
-        loadItems();
+        // Configur el LayoutManager
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         Button logoutButton = findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(v -> logout());
+
+        // 3. Inicializar Retrofit
+        shopService = RetrofitClient.getClient().create(ShopService.class);
+
+        // 4. Cagrar datos iniciales
+        loadCoins();
+        loadItems();
     }
 
     private void loadItems() {
-        // creamos servicio retrofit
-        ShopService shopService = RetrofitClient.getClient().create(ShopService.class);
-        // llamar al endpoint getItems y ejecutar peticion HTTP GET
-        Log.i(TAG, "Cargando items desde backend...");
+        progressBar.setVisibility(View.VISIBLE); // MOSTRAR RUEDA de loadBar
+
         shopService.getItems().enqueue(new Callback<List<Item>>() {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                progressBar.setVisibility(View.GONE); // OCULTAR RUEDA
+
                 if (response.isSuccessful() && response.body() != null) {
-                    //  backend responde con una lista de items, la guardamos en "items"
-                    items = response.body();
-                    Log.i(TAG, "Items recibidos: " + items.size());
+                    List<Item> listaItems = response.body();
 
-                    // ArrayAdapter classe que nos sirve para conectar la lista de datos del backend a una lista que se podra mostrar visualmente
-                    // de momento sirve para mostrarlo visualmente en formato lista
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                            ShopActivity.this,
-                            android.R.layout.simple_list_item_1,
-                            items.stream()
-                                    .map(i -> i.getNombre() + " - " + i.getPrecio() + " monedas")
-                                    .collect(Collectors.toList())
-
-                    );
-                    // guardamos los items adaptados a la lista que se mostrara en pantalla
-                    itemsListView.setAdapter(adapter);
-
-                    // click listener para cuando se pulse un item de la lista y se llama la funcion buiItem
-                    itemsListView.setOnItemClickListener((parent, view, position, id) -> {
-                        Log.i(TAG, "Item seleccionado: " + items.get(position).getNombre() + " (ID: " + items.get(position).getId() + ")");
-                        buyItem(items.get(position).getId());
+                    // Crear Adapter y definir qué pasa al hacer click
+                    ShopAdapter adapter = new ShopAdapter(listaItems, new ShopAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Item item) {
+                            // Lógica de compra al tocar un elemento
+                            comprarItem(item);
+                        }
                     });
 
+                    recyclerView.setAdapter(adapter);
                 } else {
-                    Log.e(TAG, "Error al cargar items: " + response.code());
                     Toast.makeText(ShopActivity.this, "Error al cargar items", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Item>> call, Throwable t) {
-                Log.e(TAG, "Error de conexión al cargar items", t);
-                Toast.makeText(ShopActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(ShopActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT).show();
+                Log.e("ShopActivity", "Error: " + t.getMessage());
             }
         });
     }
 
-    private void loadCoins() {
-        // creamos servicio retrofit
-        ShopService shopService = RetrofitClient.getClient().create(ShopService.class);
-        // llamar al endpoint getMonedas y ejecutar peticion HTTP GET
-        Log.i(TAG, "Cargando monedas para usuario: " + username);
-        shopService.getMonedas(username).enqueue(new Callback<ShopService.MonedasResponse>() {
-            @Override
-            public void onResponse(Call<ShopService.MonedasResponse> call, Response<ShopService.MonedasResponse> response) {
-                if(response.isSuccessful() && response.body() != null) {
-                    int monedas = response.body().getMonedas();  // cojemos el valot de dentro el objecto JSON
-                    Log.i("ShopActivity", "Monedas desde backend: " + monedas);
-                    monedasActuales.setText("Monedas: " + monedas);
+    private void comprarItem(Item item) {
+        progressBar.setVisibility(View.VISIBLE); // Feedback visual inmediato
 
-                    getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
-                            .edit()
-                            .putInt("monedas",monedas)
-                            .apply();
-                } else {
-                    Toast.makeText(ShopActivity.this, "Error al cargar monedas", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ShopService.MonedasResponse> call, Throwable t) {
-                Toast.makeText(ShopActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-
-    private void buyItem(int itemId) {
-        // creamos servicio retrofit
-        ShopService shopService = RetrofitClient.getClient().create(ShopService.class);
-        // llamar al endpoint buyItem y ejecutar peticion HTTP POST
-        Log.i(TAG, "Intentando comprar item " + itemId + " para usuario: " + username);
-        shopService.buyItem(itemId, username).enqueue(new Callback<Void>() {
+        shopService.buyItem(item.getId(), username).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.isSuccessful()) {
-                    Log.i(TAG, "Compra realizada con éxito: item " + itemId);
-                    Toast.makeText(ShopActivity.this, "Compra realizada con éxito", Toast.LENGTH_SHORT).show();
-                    loadCoins();
+                progressBar.setVisibility(View.GONE);
+
+                if (response.isSuccessful()) {
+                    Toast.makeText(ShopActivity.this, "¡Comprado " + item.getNombre() + "!", Toast.LENGTH_SHORT).show();
+                    loadCoins(); // Actualizar monedas
                 } else {
-                    Log.e(TAG, "Error en la compra del item " + itemId + " - Código: " + response.code());
-                    Toast.makeText(ShopActivity.this, "Error en la compra", Toast.LENGTH_SHORT).show();
+                    // Código 404 o 500 del backend
+                    Toast.makeText(ShopActivity.this, "Error: Saldo insuficiente o fallo", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Log.e(TAG, "Error de conexión al comprar item " + itemId, t);
-                Toast.makeText(ShopActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(ShopActivity.this, "Error de red al comprar", Toast.LENGTH_SHORT).show();
             }
         });
     }
-    private void logout(){
-        Log.i("SplashActivity", "Cerrando sesión...");
 
+    private void loadCoins() {
+        shopService.getMonedas(username).enqueue(new Callback<ShopService.MonedasResponse>() {
+            @Override
+            public void onResponse(Call<ShopService.MonedasResponse> call, Response<ShopService.MonedasResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int cantidad = response.body().getMonedas();
+                    monedasTextView.setText("Monedas: " + cantidad);
+                }
+            }
+            @Override
+            public void onFailure(Call<ShopService.MonedasResponse> call, Throwable t) {
+                Log.e("ShopActivity", "Error cargando monedas");
+            }
+        });
+    }
+
+    private void logout() {
         getSharedPreferences("MyAppPrefs", MODE_PRIVATE).edit().clear().apply();
-
-        Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
-
-        // Ir a pantalla del MainActivity
-        Intent intent = new Intent(ShopActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

@@ -8,7 +8,7 @@ public class RetrofitClient {
     // Si fas servir emulador android --> 10.0.2.2 (es un alias que apunta a localhost)
     // private static final String BASE_URL = "http://localhost:8080/";
     // Si fas servir dispositiu extern contectat al PC --> @IP del teu PC
-    private static final String BASE_URL = "http://172.20.10.3:8080/";
+    private static final String BASE_URL = "http://10.0.2.2:8080/";
 
 
     public static Retrofit getClient() {

@@ -1,5 +1,7 @@
 package edu.upc.dsa_android_DriveNdodge.api;
 
+import com.google.gson.annotations.SerializedName;
+
 import edu.upc.dsa_android_DriveNdodge.models.Item;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -18,6 +20,7 @@ public interface ShopService {
     Call<Void> buyItem(@Path("id") Integer itemId, @Body String username);
 
     public class MonedasResponse {
+        @SerializedName("coins") // Quitar en un futuro error en backend pasamos el objeto de las moendas con el nombre coins {try / catch} Linea 87 el shopService
         private int monedas;
 
         public int getMonedas() { return monedas; }

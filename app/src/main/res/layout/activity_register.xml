@@ -101,7 +101,16 @@
             android:id="@+id/registerBttn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Registrar" />
+            android:text="Registrar"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/backBttn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Volver"
+            android:backgroundTint="@android:color/darker_gray"
+            android:layout_marginBottom="16dp"/>
 
         <ProgressBar
             android:id="@+id/progressBar"

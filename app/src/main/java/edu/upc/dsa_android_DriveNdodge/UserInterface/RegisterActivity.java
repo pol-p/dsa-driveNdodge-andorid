@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import edu.upc.dsa_android_DriveNdodge.MainActivity;
 import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.AuthService;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
@@ -25,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText usernameIn, passwordIn, passwordConfirmIn, nombreIn, apellidoIn, gmailIn;
     private EditText diaIn, mesIn, anoIn;
-    private Button registerBttn;
+    private Button registerBttn, backBttn;
 
     private ProgressBar progressBar;
 
@@ -44,10 +45,17 @@ public class RegisterActivity extends AppCompatActivity {
         mesIn = findViewById(R.id.mesIn);
         anoIn = findViewById(R.id.anoIn);
         registerBttn = findViewById(R.id.registerBttn);
+        backBttn = findViewById(R.id.backBttn);
 
         progressBar = findViewById(R.id.progressBar);
 
         registerBttn.setOnClickListener(v -> doRegister());
+        backBttn.setOnClickListener(v -> {
+            Log.i(TAG, "Volviendo al MainActivity");
+            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
 
     private void doRegister() {

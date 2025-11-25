@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import edu.upc.dsa_android_DriveNdodge.MainActivity;
 import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.AuthService;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
@@ -25,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity"; // TAG per filtrar al Logcat
 
     private EditText usernameIn, passwordIn;
-    private Button loginBttn;
+    private Button loginBttn, backBttn;
     private ProgressBar progressBar;
 
     @Override
@@ -36,10 +37,16 @@ public class LoginActivity extends AppCompatActivity {
         usernameIn = findViewById(R.id.usernameIn);
         passwordIn = findViewById(R.id.passwordIn);
         loginBttn = findViewById(R.id.loginBttn);
+        backBttn = findViewById(R.id.backBttn);
+        progressBar = findViewById(R.id.progressBar);
 
         loginBttn.setOnClickListener(v -> doLogin());
-
-        progressBar = findViewById(R.id.progressBar);
+        backBttn.setOnClickListener(v -> {
+            Log.i(TAG, "Volviendo al MainActivity");
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
 
     private void doLogin() {

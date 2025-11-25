@@ -3,8 +3,10 @@ package edu.upc.dsa_android_DriveNdodge.UserInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +27,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText diaIn, mesIn, anoIn;
     private Button registerBttn;
 
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,8 @@ public class RegisterActivity extends AppCompatActivity {
         anoIn = findViewById(R.id.anoIn);
         registerBttn = findViewById(R.id.registerBttn);
 
+        progressBar = findViewById(R.id.progressBar);
+
         registerBttn.setOnClickListener(v -> doRegister());
     }
 
@@ -54,6 +60,8 @@ public class RegisterActivity extends AppCompatActivity {
         String dia = diaIn.getText().toString();
         String mes = mesIn.getText().toString();
         String ano = anoIn.getText().toString();
+
+        progressBar.setVisibility(View.VISIBLE); // MOSTRAR RUEDA de loadBar
 
         Log.i(TAG, "Intentando registrar usuario: " + username);
 
@@ -80,6 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
         authService.register(usuario).enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                progressBar.setVisibility(View.GONE); // OCULTAR RUEDA
                 if (response.isSuccessful()) {
                     Log.i(TAG, "Registro exitoso para usuario: " + username);
                     Toast.makeText(RegisterActivity.this, "Registro exitoso, ¡bienvenido!", Toast.LENGTH_SHORT).show();

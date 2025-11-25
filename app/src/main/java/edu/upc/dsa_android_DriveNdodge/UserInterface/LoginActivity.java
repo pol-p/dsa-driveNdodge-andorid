@@ -3,8 +3,10 @@ package edu.upc.dsa_android_DriveNdodge.UserInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText usernameIn, passwordIn;
     private Button loginBttn;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +38,16 @@ public class LoginActivity extends AppCompatActivity {
         loginBttn = findViewById(R.id.loginBttn);
 
         loginBttn.setOnClickListener(v -> doLogin());
+
+        progressBar = findViewById(R.id.progressBar);
     }
 
     private void doLogin() {
+
         String username = usernameIn.getText().toString().toLowerCase();
         String password = passwordIn.getText().toString();
+
+        progressBar.setVisibility(View.VISIBLE); // MOSTRAR RUEDA de loadBar
 
         Log.i(TAG, "Iniciando login con username: " + username);
 
@@ -58,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         authService.login(usuario).enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                progressBar.setVisibility(View.GONE); // OCULTAR RUEDA
                 if (response.isSuccessful()) {
                     Log.i(TAG, "Login exitoso para usuario: " + username);
 

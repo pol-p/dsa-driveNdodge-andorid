@@ -47,8 +47,6 @@ public class LoginActivity extends AppCompatActivity {
         String username = usernameIn.getText().toString().toLowerCase();
         String password = passwordIn.getText().toString();
 
-        progressBar.setVisibility(View.VISIBLE); // MOSTRAR RUEDA de loadBar
-
         Log.i(TAG, "Iniciando login con username: " + username);
 
         if(username.isEmpty() || password.isEmpty()) {
@@ -56,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Por favor rellena todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
+        progressBar.setVisibility(View.VISIBLE); // MOSTRAR RUEDA de loadBar
 
         Usuario usuario = new Usuario(username, password);
 
@@ -90,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
                 Log.e(TAG, "Error de conexión al hacer login", t);
                 Toast.makeText(LoginActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }

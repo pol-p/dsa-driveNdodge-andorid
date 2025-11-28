@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Se ha iniciado sesión correctamente", Toast.LENGTH_SHORT).show();
 
                     // redirigir a ShopActivity
-                    Intent intent = new Intent(LoginActivity.this, ShopActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, PortalPageActivity.class);
                     startActivity(intent);
                     finish();
                 } else {

@@ -115,8 +115,7 @@ public class RegisterActivity extends AppCompatActivity {
         // Todas las validaciones pasadas, mostrar progress bar
         if (progressBar != null) progressBar.setVisibility(View.VISIBLE);
 
-        String fechaNacimiento = String.format("%02d-%02d-%s", Integer.parseInt(dia),
-                Integer.parseInt(mes), ano);
+        String fechaNacimiento = String.format("%04d-%02d-%02d", Integer.parseInt(ano), Integer.parseInt(mes), Integer.parseInt(dia));
 
         Usuario usuario = new Usuario(username, password, nombre, apellido, gmail, fechaNacimiento);
 

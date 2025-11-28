@@ -37,5 +37,15 @@ public class PortalPageActivity extends AppCompatActivity {
             Intent intent = new Intent(PortalPageActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
+
+        Button logoutButton = findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(v -> logout());
+    }
+
+    private void logout() {
+        getSharedPreferences("MyAppPrefs", MODE_PRIVATE).edit().clear().apply();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

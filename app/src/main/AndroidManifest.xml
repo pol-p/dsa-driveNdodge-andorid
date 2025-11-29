@@ -30,6 +30,8 @@
         <activity android:name=".UserInterface.LoginActivity" />
         <activity android:name=".UserInterface.ShopActivity" />
         <activity android:name=".UserInterface.PortalPageActivity" />
+        <activity android:name=".UserInterface.ViewRankingActivity" />
+
 
 
     </application>

@@ -3,6 +3,7 @@ package edu.upc.dsa_android_DriveNdodge.api;
 import com.google.gson.annotations.SerializedName;
 
 import edu.upc.dsa_android_DriveNdodge.models.Item;
+import edu.upc.dsa_android_DriveNdodge.models.UsrRanking;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -28,5 +29,8 @@ public interface ShopService {
     }
     @GET("/v1/shop/monedas/{username}")
     Call<MonedasResponse> getMonedas(@Path("username") String username);
+
+    @GET("/v1/shop/ranking")
+    Call<List<UsrRanking>> getRanking();
 
 }

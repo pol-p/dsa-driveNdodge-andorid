@@ -34,7 +34,7 @@ public class PortalPageActivity extends AppCompatActivity {
         });
 
         rankBttn.setOnClickListener(v -> {
-            Intent intent = new Intent(PortalPageActivity.this, RegisterActivity.class);
+            Intent intent = new Intent(PortalPageActivity.this, ViewRankingActivity.class);
             startActivity(intent);
         });
 

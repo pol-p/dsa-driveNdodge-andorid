@@ -6,16 +6,16 @@ public class Usuario {
     private String password;
     private String nombre;
     private String apellido;
-    private String gmail;
+    private String email;
     private String fechaNacimiento;
 
     // constructor para el register
-    public Usuario(String username, String password, String nombre, String apellido, String gmail, String fechaNacimiento) {
+    public Usuario(String username, String password, String nombre, String apellido, String email, String fechaNacimiento) {
         this.username = username;
         this.password = password;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.gmail = gmail;
+        this.email = email;
         this.fechaNacimiento = fechaNacimiento;
     }
     // constructor para el login
@@ -36,8 +36,8 @@ public class Usuario {
     public String getApellido() {return apellido;}
     public void setApellido(String apellido) {this.apellido = apellido;}
 
-    public String getGmail() {return gmail;}
-    public void setGmail(String gmail) {this.gmail = gmail;}
+    public String getEmail() {return email;}
+    public void setEmail(String email) {this.email = email;}
 
     public String getFechaNacimiento() {return fechaNacimiento;}
     public void setFechaNacimiento(String fechaNacimiento) {this.fechaNacimiento = fechaNacimiento;}

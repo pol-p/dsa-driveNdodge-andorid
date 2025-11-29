@@ -30,9 +30,11 @@ public class SplashActivity extends AppCompatActivity {
 
         Intent intent;
         if(username != null && !username.isEmpty()){
-            Log.d("SplashActivity", "Usuario encontrado, abriendo ShopActivity");            intent = new Intent(SplashActivity.this, ShopActivity.class);
+            Log.d("SplashActivity", "Usuario encontrado, abriendo PortalPageActivity");
+            intent = new Intent(SplashActivity.this, PortalPageActivity.class);
         } else {
-            Log.d("SplashActivity", "No hay usuario, abriendo MainActivity");            intent = new Intent(SplashActivity.this, MainActivity.class);
+            Log.d("SplashActivity", "No hay usuario, abriendo MainActivity");
+            intent = new Intent(SplashActivity.this, MainActivity.class);
         }
         startActivity(intent);
         finish();

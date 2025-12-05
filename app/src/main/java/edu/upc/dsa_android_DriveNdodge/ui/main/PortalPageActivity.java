@@ -1,14 +1,15 @@
-package edu.upc.dsa_android_DriveNdodge.UserInterface;
+package edu.upc.dsa_android_DriveNdodge.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import edu.upc.dsa_android_DriveNdodge.MainActivity;
 import edu.upc.dsa_android_DriveNdodge.R;
+import edu.upc.dsa_android_DriveNdodge.ui.profile.ViewProfileActivity;
+import edu.upc.dsa_android_DriveNdodge.ui.ranking.ViewRankingActivity;
+import edu.upc.dsa_android_DriveNdodge.ui.shop.ShopActivity;
 
 public class PortalPageActivity extends AppCompatActivity {
 

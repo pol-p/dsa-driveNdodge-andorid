@@ -1,4 +1,4 @@
-package edu.upc.dsa_android_DriveNdodge.UserInterface;
+package edu.upc.dsa_android_DriveNdodge.ui.ranking;
 
 import android.os.Bundle;
 import android.view.View;

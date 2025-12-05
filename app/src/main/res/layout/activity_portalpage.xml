@@ -7,7 +7,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="24dp"
-    tools:context=".UserInterface.PortalPageActivity">
+    tools:context=".ui.main.PortalPageActivity">
 
     <Button
         android:id="@+id/shopBttn"

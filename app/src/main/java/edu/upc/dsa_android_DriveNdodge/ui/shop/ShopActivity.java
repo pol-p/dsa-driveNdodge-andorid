@@ -1,4 +1,4 @@
-package edu.upc.dsa_android_DriveNdodge.UserInterface;
+package edu.upc.dsa_android_DriveNdodge.ui.shop;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,11 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import edu.upc.dsa_android_DriveNdodge.MainActivity;
+import edu.upc.dsa_android_DriveNdodge.ui.main.MainActivity;
 import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.api.ShopService;
 import edu.upc.dsa_android_DriveNdodge.models.Item;
+import edu.upc.dsa_android_DriveNdodge.models.MonedasResponse;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -122,16 +124,16 @@ public class ShopActivity extends AppCompatActivity {
     }
 
     private void loadCoins() {
-        shopService.getMonedas(username).enqueue(new Callback<ShopService.MonedasResponse>() {
+        shopService.getMonedas(username).enqueue(new Callback<MonedasResponse>() {
             @Override
-            public void onResponse(Call<ShopService.MonedasResponse> call, Response<ShopService.MonedasResponse> response) {
+            public void onResponse(Call<MonedasResponse> call, Response<MonedasResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     int cantidad = response.body().getMonedas();
                     monedasTextView.setText("Monedas: " + cantidad);
                 }
             }
             @Override
-            public void onFailure(Call<ShopService.MonedasResponse> call, Throwable t) {
+            public void onFailure(Call<MonedasResponse> call, Throwable t) {
                 Log.e("ShopActivity", "Error cargando monedas");
             }
         });

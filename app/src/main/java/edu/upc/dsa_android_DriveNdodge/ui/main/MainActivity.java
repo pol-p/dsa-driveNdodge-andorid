@@ -1,4 +1,4 @@
-package edu.upc.dsa_android_DriveNdodge;
+package edu.upc.dsa_android_DriveNdodge.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,8 +6,9 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import edu.upc.dsa_android_DriveNdodge.UserInterface.LoginActivity;
-import edu.upc.dsa_android_DriveNdodge.UserInterface.RegisterActivity;
+import edu.upc.dsa_android_DriveNdodge.R;
+import edu.upc.dsa_android_DriveNdodge.ui.auth.LoginActivity;
+import edu.upc.dsa_android_DriveNdodge.ui.auth.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
 

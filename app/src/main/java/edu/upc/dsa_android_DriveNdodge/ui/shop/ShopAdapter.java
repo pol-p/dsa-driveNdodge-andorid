@@ -1,4 +1,4 @@
-package edu.upc.dsa_android_DriveNdodge.UserInterface;
+package edu.upc.dsa_android_DriveNdodge.ui.shop;
 
 import android.view.LayoutInflater;
 import android.view.View;

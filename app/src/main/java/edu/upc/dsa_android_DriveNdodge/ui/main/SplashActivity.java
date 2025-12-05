@@ -1,4 +1,4 @@
-package edu.upc.dsa_android_DriveNdodge.UserInterface;
+package edu.upc.dsa_android_DriveNdodge.ui.main;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,8 +8,6 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import edu.upc.dsa_android_DriveNdodge.R;
-
-import edu.upc.dsa_android_DriveNdodge.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
     @Override

@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".UserInterface.SplashActivity"
+            android:name=".ui.main.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,13 +25,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity" />
-        <activity android:name=".UserInterface.RegisterActivity" />
-        <activity android:name=".UserInterface.LoginActivity" />
-        <activity android:name=".UserInterface.ShopActivity" />
-        <activity android:name=".UserInterface.PortalPageActivity" />
-        <activity android:name=".UserInterface.ViewRankingActivity" />
-        <activity android:name=".UserInterface.ViewProfileActivity" />
+        <activity android:name=".ui.main.MainActivity" />
+        <activity android:name=".ui.auth.RegisterActivity" />
+        <activity android:name=".ui.auth.LoginActivity" />
+        <activity android:name=".ui.shop.ShopActivity" />
+        <activity android:name=".ui.main.PortalPageActivity" />
+        <activity android:name=".ui.ranking.ViewRankingActivity" />
+        <activity android:name=".ui.profile.ViewProfileActivity" />
 
 
 

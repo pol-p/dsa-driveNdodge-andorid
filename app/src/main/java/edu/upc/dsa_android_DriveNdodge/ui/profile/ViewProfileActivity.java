@@ -1,4 +1,4 @@
-package edu.upc.dsa_android_DriveNdodge.UserInterface;
+package edu.upc.dsa_android_DriveNdodge.ui.profile;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

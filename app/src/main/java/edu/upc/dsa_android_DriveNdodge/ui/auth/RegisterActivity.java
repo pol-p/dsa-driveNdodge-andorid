@@ -1,4 +1,4 @@
-package edu.upc.dsa_android_DriveNdodge.UserInterface;
+package edu.upc.dsa_android_DriveNdodge.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import edu.upc.dsa_android_DriveNdodge.MainActivity;
+import edu.upc.dsa_android_DriveNdodge.ui.main.MainActivity;
 import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.AuthService;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;

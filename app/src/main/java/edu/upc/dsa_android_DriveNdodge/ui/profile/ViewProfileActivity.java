@@ -1,9 +1,11 @@
 package edu.upc.dsa_android_DriveNdodge.ui.profile;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.api.ShopService;
 import edu.upc.dsa_android_DriveNdodge.models.UserProfile;
+import edu.upc.dsa_android_DriveNdodge.ui.main.PortalPageActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +39,9 @@ public class ViewProfileActivity extends AppCompatActivity {
         tvCoins = findViewById(R.id.tvCoins);
         tvHighScore = findViewById(R.id.tvHighScore);
         progressBar = findViewById(R.id.progressBarProfile);
+
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> volver());
 
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         username = prefs.getString("username", null);
@@ -91,5 +97,11 @@ public class ViewProfileActivity extends AppCompatActivity {
 
         tvCoins.setText(String.valueOf(p.getMonedas()));
         tvHighScore.setText(String.valueOf(p.getMejorPuntuacion()));
+    }
+
+    private void volver() {
+        Intent intent = new Intent(this, PortalPageActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

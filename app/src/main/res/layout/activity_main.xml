@@ -1,23 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_layout"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp">
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/loginBttn"
+    <ImageView
+        android:id="@+id/bgImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Iniciar sesión"
-        android:layout_marginBottom="24dp" />
+        android:layout_height="match_parent"
+        android:src="@drawable/background"
+        android:scaleType="centerCrop"/>
 
-    <Button
-        android:id="@+id/registerBttn"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Registrarse" />
+        android:layout_height="match_parent"
+        android:padding="24dp">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/logoImage"
+            android:layout_width="384dp"
+            android:layout_height="269dp"
+            android:adjustViewBounds="true"
+            android:maxHeight="260dp"
+            android:src="@drawable/logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/loginBttn"
+            android:fontFamily="@font/pressstart2pregular"
+            android:layout_width="220dp"
+            android:layout_height="60dp"
+            android:background="@drawable/redrectanglebttn"
+            android:backgroundTint="@null"
+            app:backgroundTint="@null"
+            android:text="INICIAR SESIÓN"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@id/logoImage"
+            app:layout_constraintBottom_toTopOf="@id/registerBttn"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+            android:id="@+id/registerBttn"
+            android:fontFamily="@font/pressstart2pregular"
+            android:layout_width="220dp"
+            android:layout_height="60dp"
+            android:background="@drawable/redrectanglebttn"
+            android:backgroundTint="@null"
+            app:backgroundTint="@null"
+            android:text="REGISTRARSE"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@id/loginBttn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

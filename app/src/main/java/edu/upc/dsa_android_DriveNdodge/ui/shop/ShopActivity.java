@@ -23,6 +23,7 @@ import edu.upc.dsa_android_DriveNdodge.api.ShopService;
 import edu.upc.dsa_android_DriveNdodge.models.Item;
 import edu.upc.dsa_android_DriveNdodge.models.MonedasResponse;
 
+import edu.upc.dsa_android_DriveNdodge.ui.main.PortalPageActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,8 +53,9 @@ public class ShopActivity extends AppCompatActivity {
         // Configur el LayoutManager
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        Button logoutButton = findViewById(R.id.logoutButton);
-        logoutButton.setOnClickListener(v -> logout());
+
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> volver());
 
         // 3. Inicializar Retrofit
         shopService = RetrofitClient.getClient().create(ShopService.class);
@@ -139,10 +141,11 @@ public class ShopActivity extends AppCompatActivity {
         });
     }
 
-    private void logout() {
-        getSharedPreferences("MyAppPrefs", MODE_PRIVATE).edit().clear().apply();
-        Intent intent = new Intent(this, MainActivity.class);
+
+    private void volver() {
+        Intent intent = new Intent(this, PortalPageActivity.class);
         startActivity(intent);
         finish();
     }
+
 }

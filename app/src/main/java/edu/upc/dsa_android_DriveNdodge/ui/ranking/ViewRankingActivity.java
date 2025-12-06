@@ -1,7 +1,9 @@
 package edu.upc.dsa_android_DriveNdodge.ui.ranking;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.api.ShopService;
 import edu.upc.dsa_android_DriveNdodge.models.UsrRanking;
+import edu.upc.dsa_android_DriveNdodge.ui.main.PortalPageActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,6 +31,9 @@ public class ViewRankingActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerViewRanking);
         progressBar = findViewById(R.id.progressBar);
+
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> volver());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -62,5 +68,11 @@ public class ViewRankingActivity extends AppCompatActivity {
                 Toast.makeText(ViewRankingActivity.this, "Error de red", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void volver() {
+        Intent intent = new Intent(this, PortalPageActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

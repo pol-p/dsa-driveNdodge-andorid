@@ -32,9 +32,7 @@
         <activity android:name=".ui.main.PortalPageActivity" />
         <activity android:name=".ui.ranking.ViewRankingActivity" />
         <activity android:name=".ui.profile.ViewProfileActivity" />
-
-
-
+        <activity android:name=".ui.inventario.InventarioActivity"/>
     </application>
 
 </manifest>

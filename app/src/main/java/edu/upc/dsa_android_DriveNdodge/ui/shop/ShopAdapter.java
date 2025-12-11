@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.models.Item;
+import android.widget.ImageView;
+import com.squareup.picasso.Picasso;
 
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
 
@@ -40,6 +42,8 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
         holder.descripcion.setText(item.getDescripcion());
         holder.precio.setText(item.getPrecio() + " 💰");
 
+        Picasso.get().load(item.getImagen()).placeholder(R.drawable.logo).error(R.drawable.logo).fit().centerInside().into(holder.imagenItem);
+
         // Al hacer click en la tarjeta, avisamos a la Activity
         holder.itemView.setOnClickListener(v -> listener.onItemClick(item));
     }
@@ -51,12 +55,14 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView nombre, descripcion, precio;
+        ImageView imagenItem;
 
         public ViewHolder(View view) {
             super(view);
             nombre = view.findViewById(R.id.textNombre);
             descripcion = view.findViewById(R.id.textDescripcion);
             precio = view.findViewById(R.id.textPrecio);
+            imagenItem = view.findViewById(R.id.imgShopItem);
         }
     }
 }

@@ -67,6 +67,7 @@ public class ViewProfileActivity extends AppCompatActivity {
 
                 if (response.isSuccessful() && response.body() != null) {
                     UserProfile profile = response.body();
+                    Log.i("ViewProfileActivity", "Email devuelto: " + profile.getEmail());
                     updateUI(profile);
                 } else {
                     Toast.makeText(ViewProfileActivity.this, "Error al cargar perfil", Toast.LENGTH_SHORT).show();

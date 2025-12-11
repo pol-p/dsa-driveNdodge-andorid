@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    app:cardCornerRadius="8dp"
+    app:cardElevation="6dp"
+    app:cardBackgroundColor="#B3000000">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +37,8 @@
                 android:text="Nombre del Item"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:textColor="@android:color/white"
+                android:fontFamily="@font/vt323regular"/>
 
             <TextView
                 android:id="@+id/txtDescripcion"
@@ -44,7 +46,8 @@
                 android:layout_height="wrap_content"
                 android:text="Descripción corta..."
                 android:textSize="14sp"
-                android:textColor="#666666"/>
+                android:textColor="#CCCCCC"
+                android:fontFamily="@font/vt323regular"/>
         </LinearLayout>
 
         <TextView
@@ -54,10 +57,10 @@
             android:text="x1"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="#FF5722"
-            android:background="#EEE"
+            android:textColor="#FF9100"
+            android:fontFamily="@font/vt323regular"
             android:padding="8dp"
-            android:layout_gravity="center"/>
+            android:gravity="center"/>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

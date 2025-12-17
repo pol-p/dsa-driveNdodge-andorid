@@ -24,12 +24,6 @@ public interface ShopService {
     @GET("/v1/shop/monedas/{username}")
     Call<MonedasResponse> getMonedas(@Path("username") String username);
 
-    @GET("/v1/shop/ranking")
-    Call<List<UsrRanking>> getRanking();
-
-    @GET("/v1/shop/perfil/{username}")
-    Call<UsrProfile> getProfile(@Path("username") String username);
-
     @GET("/v1/shop/inventario/{username}")
     Call<List<ItemInventario>> getInventario(@Path("username") String username);
 }

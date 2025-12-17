@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.upc.dsa_android_DriveNdodge.R;
+import edu.upc.dsa_android_DriveNdodge.api.PerfilService;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.api.ShopService;
 import edu.upc.dsa_android_DriveNdodge.models.UsrProfile;
@@ -26,7 +27,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     private TextView tvUsernameTitle, tvFullName, tvEmail, tvBirthDate, tvCoins, tvHighScore;
     private ProgressBar progressBar;
     private String username;
-    private ShopService shopService;
+    private PerfilService perfilService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         username = prefs.getString("username", null);
 
-        shopService = RetrofitClient.getClient().create(ShopService.class);
+        perfilService = RetrofitClient.getClient().create(PerfilService.class);
 
         if (username != null) {
             loadUserProfile();
@@ -64,7 +65,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     private void loadUserProfile() {
         progressBar.setVisibility(View.VISIBLE);
 
-        shopService.getProfile(username).enqueue(new Callback<UsrProfile>() {
+        perfilService.getProfile(username).enqueue(new Callback<UsrProfile>() {
             @Override
             public void onResponse(Call<UsrProfile> call, Response<UsrProfile> response) {
                 progressBar.setVisibility(View.GONE);

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import edu.upc.dsa_android_DriveNdodge.R;
+import edu.upc.dsa_android_DriveNdodge.api.RankingService;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.api.ShopService;
 import edu.upc.dsa_android_DriveNdodge.models.UsrRanking;
@@ -23,7 +24,7 @@ public class ViewRankingActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-    private ShopService shopService;
+    private RankingService rankingService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class ViewRankingActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        shopService = RetrofitClient.getClient().create(ShopService.class);
+        rankingService = RetrofitClient.getClient().create(RankingService.class);
 
         loadRanking();
     }
@@ -50,7 +51,7 @@ public class ViewRankingActivity extends AppCompatActivity {
     private void loadRanking() {
         progressBar.setVisibility(View.VISIBLE);
 
-        shopService.getRanking().enqueue(new Callback<List<UsrRanking>>() {
+        rankingService.getRanking().enqueue(new Callback<List<UsrRanking>>() {
             @Override
             public void onResponse(Call<List<UsrRanking>> call, Response<List<UsrRanking>> response) {
                 progressBar.setVisibility(View.GONE);

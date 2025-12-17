@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity"; // TAG per filtrar al Logcat
 
     private EditText usernameIn, passwordIn;
-    private Button loginBttn, backBttn;
+    private Button loginBttn;
     private ProgressBar progressBar;
 
     @Override
@@ -38,10 +38,11 @@ public class LoginActivity extends AppCompatActivity {
         usernameIn = findViewById(R.id.usernameIn);
         passwordIn = findViewById(R.id.passwordIn);
         loginBttn = findViewById(R.id.loginBttn);
-        backBttn = findViewById(R.id.backBttn);
         progressBar = findViewById(R.id.progressBar);
 
         loginBttn.setOnClickListener(v -> doLogin());
+
+        Button backBttn = findViewById(R.id.backBttn);
         backBttn.setOnClickListener(v -> {
             Log.i(TAG, "Volviendo al MainActivity");
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -66,10 +67,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Usuario usuario = new Usuario(username, password);
 
-        // creamos servicio retrofit
         AuthService authService = RetrofitClient.getClient().create(AuthService.class);
-
-        // llamar al endpoint login y ejecutar peticion HTTP POST
         authService.login(usuario).enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {

@@ -53,9 +53,12 @@ public class ShopActivity extends AppCompatActivity {
         // Configur el LayoutManager
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         Button backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(v -> volver());
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, PortalPageActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
         // 3. Inicializar Retrofit
         shopService = RetrofitClient.getClient().create(ShopService.class);
@@ -67,6 +70,7 @@ public class ShopActivity extends AppCompatActivity {
 
     private void loadItems() {
         progressBar.setVisibility(View.VISIBLE); // MOSTRAR RUEDA de loadBar
+
 
         shopService.getItems().enqueue(new Callback<List<Item>>() {
             @Override
@@ -140,12 +144,4 @@ public class ShopActivity extends AppCompatActivity {
             }
         });
     }
-
-
-    private void volver() {
-        Intent intent = new Intent(this, PortalPageActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
 }

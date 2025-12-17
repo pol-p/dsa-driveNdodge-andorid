@@ -23,6 +23,7 @@ public class ViewRankingActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
+    private ShopService shopService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +34,15 @@ public class ViewRankingActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
 
         Button backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(v -> volver());
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, PortalPageActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        shopService = RetrofitClient.getClient().create(ShopService.class);
 
         loadRanking();
     }
@@ -43,10 +50,7 @@ public class ViewRankingActivity extends AppCompatActivity {
     private void loadRanking() {
         progressBar.setVisibility(View.VISIBLE);
 
-        ShopService service = RetrofitClient.getClient().create(ShopService.class);
-        Call<List<UsrRanking>> call = service.getRanking();
-
-        call.enqueue(new Callback<List<UsrRanking>>() {
+        shopService.getRanking().enqueue(new Callback<List<UsrRanking>>() {
             @Override
             public void onResponse(Call<List<UsrRanking>> call, Response<List<UsrRanking>> response) {
                 progressBar.setVisibility(View.GONE);
@@ -68,11 +72,5 @@ public class ViewRankingActivity extends AppCompatActivity {
                 Toast.makeText(ViewRankingActivity.this, "Error de red", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void volver() {
-        Intent intent = new Intent(this, PortalPageActivity.class);
-        startActivity(intent);
-        finish();
     }
 }

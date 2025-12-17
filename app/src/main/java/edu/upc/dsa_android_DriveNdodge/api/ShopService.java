@@ -1,11 +1,9 @@
 package edu.upc.dsa_android_DriveNdodge.api;
 
-import com.google.gson.annotations.SerializedName;
-
 import edu.upc.dsa_android_DriveNdodge.models.Item;
 import edu.upc.dsa_android_DriveNdodge.models.ItemInventario;
 import edu.upc.dsa_android_DriveNdodge.models.MonedasResponse;
-import edu.upc.dsa_android_DriveNdodge.models.UserProfile;
+import edu.upc.dsa_android_DriveNdodge.models.UsrProfile;
 import edu.upc.dsa_android_DriveNdodge.models.UsrRanking;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -30,7 +28,7 @@ public interface ShopService {
     Call<List<UsrRanking>> getRanking();
 
     @GET("/v1/shop/perfil/{username}")
-    Call<UserProfile> getProfile(@Path("username") String username);
+    Call<UsrProfile> getProfile(@Path("username") String username);
 
     @GET("/v1/shop/inventario/{username}")
     Call<List<ItemInventario>> getInventario(@Path("username") String username);

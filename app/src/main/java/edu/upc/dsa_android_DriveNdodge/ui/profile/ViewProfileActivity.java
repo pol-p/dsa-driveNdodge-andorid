@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.api.ShopService;
-import edu.upc.dsa_android_DriveNdodge.models.UserProfile;
+import edu.upc.dsa_android_DriveNdodge.models.UsrProfile;
 import edu.upc.dsa_android_DriveNdodge.ui.main.PortalPageActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +26,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     private TextView tvUsernameTitle, tvFullName, tvEmail, tvBirthDate, tvCoins, tvHighScore;
     private ProgressBar progressBar;
     private String username;
+    private ShopService shopService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +42,16 @@ public class ViewProfileActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBarProfile);
 
         Button backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(v -> volver());
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, PortalPageActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         username = prefs.getString("username", null);
+
+        shopService = RetrofitClient.getClient().create(ShopService.class);
 
         if (username != null) {
             loadUserProfile();
@@ -57,16 +64,13 @@ public class ViewProfileActivity extends AppCompatActivity {
     private void loadUserProfile() {
         progressBar.setVisibility(View.VISIBLE);
 
-        ShopService service = RetrofitClient.getClient().create(ShopService.class);
-        Call<UserProfile> call = service.getProfile(username);
-
-        call.enqueue(new Callback<UserProfile>() {
+        shopService.getProfile(username).enqueue(new Callback<UsrProfile>() {
             @Override
-            public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
+            public void onResponse(Call<UsrProfile> call, Response<UsrProfile> response) {
                 progressBar.setVisibility(View.GONE);
 
                 if (response.isSuccessful() && response.body() != null) {
-                    UserProfile profile = response.body();
+                    UsrProfile profile = response.body();
                     Log.i("ViewProfileActivity", "Email devuelto: " + profile.getEmail());
                     updateUI(profile);
                 } else {
@@ -75,7 +79,7 @@ public class ViewProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<UserProfile> call, Throwable t) {
+            public void onFailure(Call<UsrProfile> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(ViewProfileActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
                 Log.e("ViewProfileActivity", "Error", t);
@@ -83,7 +87,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUI(UserProfile p) {
+    private void updateUI(UsrProfile p) {
         tvUsernameTitle.setText("@" + p.getUsername());
 
         String nombreCompleto = p.getNombre() + " " + p.getApellido();
@@ -98,11 +102,5 @@ public class ViewProfileActivity extends AppCompatActivity {
 
         tvCoins.setText(String.valueOf(p.getMonedas()));
         tvHighScore.setText(String.valueOf(p.getMejorPuntuacion()));
-    }
-
-    private void volver() {
-        Intent intent = new Intent(this, PortalPageActivity.class);
-        startActivity(intent);
-        finish();
     }
 }

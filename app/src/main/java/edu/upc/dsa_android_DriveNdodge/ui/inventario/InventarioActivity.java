@@ -1,6 +1,7 @@
 package edu.upc.dsa_android_DriveNdodge.ui.inventario;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.api.ShopService;
 import edu.upc.dsa_android_DriveNdodge.models.ItemInventario;
+import edu.upc.dsa_android_DriveNdodge.ui.main.PortalPageActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,7 +31,6 @@ public class InventarioActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private TextView tvEmptyView;
-    private Button btnVolver;
     private ShopService shopService;
     private String username;
 
@@ -41,13 +42,19 @@ public class InventarioActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewInventario);
         progressBar = findViewById(R.id.progressBarInventario);
         tvEmptyView = findViewById(R.id.tvEmptyView);
-        btnVolver = findViewById(R.id.btnVolver);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
         username = prefs.getString("username", null);
+
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, PortalPageActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
         shopService = RetrofitClient.getClient().create(ShopService.class);
-        btnVolver.setOnClickListener(v -> finish());
 
         if (username != null) {
             loadInventario();

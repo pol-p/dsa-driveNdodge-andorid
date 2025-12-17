@@ -1,6 +1,6 @@
 package edu.upc.dsa_android_DriveNdodge.models;
 
-public class UserProfile {
+public class UsrProfile {
     private String username;
     private String nombre;
     private String apellido;
@@ -9,10 +9,10 @@ public class UserProfile {
     private int mejorPuntuacion;
     private String fechaNacimiento;
 
-    public UserProfile() {
+    public UsrProfile() {
     }
 
-    public UserProfile(String username, String nombre, String apellido, String email, int monedas, int mejorPuntuacion, String fechaNacimiento) {
+    public UsrProfile(String username, String nombre, String apellido, String email, int monedas, int mejorPuntuacion, String fechaNacimiento) {
         this.username = username;
         this.nombre = nombre;
         this.apellido = apellido;

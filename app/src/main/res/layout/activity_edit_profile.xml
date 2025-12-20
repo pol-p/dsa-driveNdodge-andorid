@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background2">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:fontFamily="@font/vt323regular"
+                android:shadowColor="#000000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:text="EDITAR PERFIL"
+                android:textColor="@android:color/white"
+                android:textSize="48sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/lblNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/vt323regular"
+                android:text="NOMBRE"
+                android:textColor="#FFD700"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+            <EditText
+                android:id="@+id/etEditNombre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/white"
+                android:fontFamily="@font/vt323regular"
+                android:hint="Introduce tu nombre"
+                android:inputType="textPersonName"
+                android:textColor="@android:color/white"
+                android:textColorHint="#AAAAAA"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblNombre" />
+
+            <TextView
+                android:id="@+id/lblApellido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/vt323regular"
+                android:text="APELLIDO"
+                android:textColor="#FFD700"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etEditNombre" />
+
+            <EditText
+                android:id="@+id/etEditApellido"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/white"
+                android:fontFamily="@font/vt323regular"
+                android:hint="Introduce tu apellido"
+                android:inputType="textPersonName"
+                android:textColor="@android:color/white"
+                android:textColorHint="#AAAAAA"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblApellido" />
+
+            <TextView
+                android:id="@+id/lblEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/vt323regular"
+                android:text="EMAIL"
+                android:textColor="#FFD700"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etEditApellido" />
+
+            <EditText
+                android:id="@+id/etEditEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/white"
+                android:fontFamily="@font/vt323regular"
+                android:hint="correo@ejemplo.com"
+                android:inputType="textEmailAddress"
+                android:textColor="@android:color/white"
+                android:textColorHint="#AAAAAA"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblEmail" />
+
+            <TextView
+                android:id="@+id/lblFecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/vt323regular"
+                android:text="FECHA DE NACIMIENTO"
+                android:textColor="#FFD700"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etEditEmail" />
+
+            <EditText
+                android:id="@+id/etEditFecha"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/white"
+                android:fontFamily="@font/vt323regular"
+                android:hint="YYYY-MM-DD"
+                android:inputType="date"
+                android:textColor="@android:color/white"
+                android:textColorHint="#AAAAAA"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblFecha" />
+
+            <Button
+                android:id="@+id/btnSaveChanges"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/bluerectanglebttn"
+                android:fontFamily="@font/vt323regular"
+                android:text="GUARDAR"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etEditFecha" />
+
+            <Button
+                android:id="@+id/btnCancelEdit"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/redrectanglebttn"
+                android:fontFamily="@font/vt323regular"
+                android:text="CANCELAR"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnSaveChanges" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

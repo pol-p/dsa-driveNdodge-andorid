@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,9 @@ public class ViewProfileActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private String username;
     private PerfilService perfilService;
+    private ImageButton btnEditProfile;
+    private UsrProfile currentProfile;
+    private static final int EDIT_PROFILE_REQUEST = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,8 @@ public class ViewProfileActivity extends AppCompatActivity {
         tvCoins = findViewById(R.id.tvCoins);
         tvHighScore = findViewById(R.id.tvHighScore);
         progressBar = findViewById(R.id.progressBarProfile);
+        btnEditProfile = findViewById(R.id.btnEditProfile);
+
 
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
@@ -60,7 +66,22 @@ public class ViewProfileActivity extends AppCompatActivity {
             Toast.makeText(this, "Error: No hay sesión iniciada", Toast.LENGTH_SHORT).show();
             finish();
         }
+
+        btnEditProfile.setOnClickListener(v -> {
+            if (currentProfile != null) {
+                Intent i = new Intent(ViewProfileActivity.this, EditProfileActivity.class);
+                // Pasamos los datos actuales a la siguiente pantalla
+                i.putExtra("username", currentProfile.getUsername());
+                i.putExtra("nombre", currentProfile.getNombre());
+                i.putExtra("apellido", currentProfile.getApellido());
+                i.putExtra("email", currentProfile.getEmail());
+                i.putExtra("fecha", currentProfile.getFechaNacimiento());
+
+                startActivityForResult(i, EDIT_PROFILE_REQUEST);
+            }
+        });
     }
+
 
     private void loadUserProfile() {
         progressBar.setVisibility(View.VISIBLE);
@@ -72,6 +93,7 @@ public class ViewProfileActivity extends AppCompatActivity {
 
                 if (response.isSuccessful() && response.body() != null) {
                     UsrProfile profile = response.body();
+                    currentProfile = response.body();
                     Log.i("ViewProfileActivity", "Email devuelto: " + profile.getEmail());
                     updateUI(profile);
                 } else {
@@ -104,4 +126,17 @@ public class ViewProfileActivity extends AppCompatActivity {
         tvCoins.setText(String.valueOf(p.getMonedas()));
         tvHighScore.setText(String.valueOf(p.getMejorPuntuacion()));
     }
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+
+            if (requestCode == EDIT_PROFILE_REQUEST) {
+                if (resultCode == RESULT_OK) {
+                    // Si la edición fue bien, recargamos los datos del servidor
+                    Toast.makeText(this, "Perfil actualizado, recargando...", Toast.LENGTH_SHORT).show();
+                    loadUserProfile();
+                }
+            }
+        }
+
 }

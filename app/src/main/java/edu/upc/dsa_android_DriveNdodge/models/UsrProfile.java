@@ -8,6 +8,7 @@ public class UsrProfile {
     private int monedas;
     private int mejorPuntuacion;
     private String fechaNacimiento;
+    private String imagenPerfil;
 
     public UsrProfile() {
     }
@@ -61,4 +62,11 @@ public class UsrProfile {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public String getImagenPerfil() {
+        return imagenPerfil;
+    }
+
+    public void setImagenPerfil(String imagenPerfil) {
+        this.imagenPerfil = imagenPerfil;
+    }
 }

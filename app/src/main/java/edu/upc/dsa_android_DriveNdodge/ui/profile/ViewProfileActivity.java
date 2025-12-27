@@ -7,11 +7,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.squareup.picasso.Picasso;
 
 import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.PerfilService;
@@ -32,7 +35,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     private ImageButton btnEditProfile;
     private UsrProfile currentProfile;
     private static final int EDIT_PROFILE_REQUEST = 101;
-
+    private static final String BASE_URL_IMG = RetrofitClient.getBaseUrl() + "img/avatar/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,20 +69,6 @@ public class ViewProfileActivity extends AppCompatActivity {
             Toast.makeText(this, "Error: No hay sesión iniciada", Toast.LENGTH_SHORT).show();
             finish();
         }
-
-        btnEditProfile.setOnClickListener(v -> {
-            if (currentProfile != null) {
-                Intent i = new Intent(ViewProfileActivity.this, EditProfileActivity.class);
-                // Pasamos los datos actuales a la siguiente pantalla
-                i.putExtra("username", currentProfile.getUsername());
-                i.putExtra("nombre", currentProfile.getNombre());
-                i.putExtra("apellido", currentProfile.getApellido());
-                i.putExtra("email", currentProfile.getEmail());
-                i.putExtra("fecha", currentProfile.getFechaNacimiento());
-
-                startActivityForResult(i, EDIT_PROFILE_REQUEST);
-            }
-        });
     }
 
 
@@ -125,6 +114,30 @@ public class ViewProfileActivity extends AppCompatActivity {
 
         tvCoins.setText(String.valueOf(p.getMonedas()));
         tvHighScore.setText(String.valueOf(p.getMejorPuntuacion()));
+
+        ImageView ivProfilePic = findViewById(R.id.ivProfilePic);
+        String nombreAvatar = p.getImagenPerfil();
+
+        if (nombreAvatar == null || nombreAvatar.isEmpty()) {
+            nombreAvatar = "avatar_default.webp";
+        }
+        Picasso.get().load(BASE_URL_IMG + nombreAvatar).placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).fit().centerCrop().into(ivProfilePic);
+
+        String finalNombreAvatar = nombreAvatar;
+
+        btnEditProfile.setOnClickListener(v -> {
+            if (currentProfile != null) {
+                Intent i = new Intent(ViewProfileActivity.this, EditProfileActivity.class);
+                i.putExtra("username", currentProfile.getUsername());
+                i.putExtra("nombre", currentProfile.getNombre());
+                i.putExtra("apellido", currentProfile.getApellido());
+                i.putExtra("email", currentProfile.getEmail());
+                i.putExtra("fecha", currentProfile.getFechaNacimiento());
+                i.putExtra("imagenPerfil", finalNombreAvatar);
+
+                startActivityForResult(i, EDIT_PROFILE_REQUEST);
+            }
+        });
     }
         @Override
         protected void onActivityResult(int requestCode, int resultCode, Intent data) {

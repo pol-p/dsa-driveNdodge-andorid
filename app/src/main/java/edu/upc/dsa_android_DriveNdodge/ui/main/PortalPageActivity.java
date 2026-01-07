@@ -81,7 +81,7 @@ public class PortalPageActivity extends AppCompatActivity {
                                 launchIntent.getComponent().flattenToShortString()
                 );
 
-                // ---------- Datos enviados al juego ----------
+                // user android to unity
                 launchIntent.putExtra("user", username);
 
                 startActivity(launchIntent);

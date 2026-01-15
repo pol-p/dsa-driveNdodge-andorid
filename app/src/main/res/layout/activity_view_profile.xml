@@ -73,6 +73,50 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/clanBadgeContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp"
+                app:cardBackgroundColor="#80000000"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@id/tvUsernameTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp">
+
+                    <ImageView
+                        android:id="@+id/ivClanLogo"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@mipmap/ic_launcher"
+                        android:visibility="gone"
+                        android:layout_marginEnd="8dp"
+                        android:scaleType="centerCrop"/>
+
+                    <TextView
+                        android:id="@+id/tvClanName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sin Clan"
+                        android:textSize="12sp"
+                        android:textColor="#FFEB3B"
+                        android:fontFamily="@font/pressstart2pregular"
+                        android:includeFontPadding="false" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/cardData"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,7 +124,7 @@
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp"
                 app:cardBackgroundColor="#B3000000"
-                app:layout_constraintTop_toBottomOf="@id/tvUsernameTitle">
+                app:layout_constraintTop_toBottomOf="@id/clanBadgeContainer">
 
                 <LinearLayout
                     android:layout_width="match_parent"

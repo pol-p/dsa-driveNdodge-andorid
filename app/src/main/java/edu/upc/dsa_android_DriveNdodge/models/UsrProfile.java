@@ -9,7 +9,8 @@ public class UsrProfile {
     private int mejorPuntuacion;
     private String fechaNacimiento;
     private String imagenPerfil;
-
+    private String clanNombre;
+    private String clanImagen;
     public UsrProfile() {
     }
 
@@ -64,6 +65,22 @@ public class UsrProfile {
 
     public String getImagenPerfil() {
         return imagenPerfil;
+    }
+
+    public String getClanNombre() {
+        return clanNombre;
+    }
+
+    public void setClanNombre(String clanNombre) {
+        this.clanNombre = clanNombre;
+    }
+
+    public String getClanImagen() {
+        return clanImagen;
+    }
+
+    public void setClanImagen(String clanImagen) {
+        this.clanImagen = clanImagen;
     }
 
     public void setImagenPerfil(String imagenPerfil) {

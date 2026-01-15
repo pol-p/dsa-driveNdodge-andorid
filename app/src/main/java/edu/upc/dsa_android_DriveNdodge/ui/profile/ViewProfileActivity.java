@@ -28,14 +28,17 @@ import retrofit2.Response;
 
 public class ViewProfileActivity extends AppCompatActivity {
 
-    private TextView tvUsernameTitle, tvFullName, tvEmail, tvBirthDate, tvCoins, tvHighScore;
+    private TextView tvUsernameTitle, tvFullName, tvEmail, tvBirthDate, tvCoins, tvHighScore, tvClanName;
     private ProgressBar progressBar;
     private String username;
     private PerfilService perfilService;
     private ImageButton btnEditProfile;
     private UsrProfile currentProfile;
+    private ImageView ivClanLogo;
     private static final int EDIT_PROFILE_REQUEST = 101;
     private static final String BASE_URL_IMG = RetrofitClient.getBaseUrl() + "img/avatar/";
+    private static final String BASE_URL_CLAN = RetrofitClient.getBaseUrl() + "img/clan/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +52,8 @@ public class ViewProfileActivity extends AppCompatActivity {
         tvHighScore = findViewById(R.id.tvHighScore);
         progressBar = findViewById(R.id.progressBarProfile);
         btnEditProfile = findViewById(R.id.btnEditProfile);
-
+        tvClanName = findViewById(R.id.tvClanName);
+        ivClanLogo = findViewById(R.id.ivClanLogo);
 
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
@@ -124,6 +128,22 @@ public class ViewProfileActivity extends AppCompatActivity {
         Picasso.get().load(BASE_URL_IMG + nombreAvatar).placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).fit().centerCrop().into(ivProfilePic);
 
         String finalNombreAvatar = nombreAvatar;
+
+        if (p.getClanNombre() != null && !p.getClanNombre().isEmpty() && !p.getClanNombre().equals("Sin Clan")) {
+            // Si tiene clan
+            tvClanName.setText(p.getClanNombre());
+            ivClanLogo.setVisibility(View.VISIBLE);
+
+            String imagenClan = p.getClanImagen();
+            if (imagenClan == null || imagenClan.isEmpty()) {
+                imagenClan = "clan_default.png";
+            }
+            Picasso.get().load(BASE_URL_CLAN + imagenClan).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).fit().centerCrop().into(ivClanLogo);
+        } else {
+            // Si no tiene clan
+            tvClanName.setText("Sin Clan");
+            ivClanLogo.setVisibility(View.GONE);
+        }
 
         btnEditProfile.setOnClickListener(v -> {
             if (currentProfile != null) {

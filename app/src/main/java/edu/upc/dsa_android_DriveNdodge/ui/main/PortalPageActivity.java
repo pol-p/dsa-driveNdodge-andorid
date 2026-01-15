@@ -19,7 +19,7 @@ import edu.upc.dsa_android_DriveNdodge.models.*;
 
 public class PortalPageActivity extends AppCompatActivity {
 
-    private Button shopBttn, perfilBttn, rankBttn, inventoryBttn, playBttn;
+    private Button shopBttn, perfilBttn, rankBttn, inventoryBttn, playBttn, clansBttn;
 
 
     private String money;
@@ -44,13 +44,7 @@ public class PortalPageActivity extends AppCompatActivity {
         perfilBttn = findViewById(R.id.perfilBttn);
         rankBttn = findViewById(R.id.rankBttn);
         inventoryBttn = findViewById(R.id.inventoryBttn);
-
-
-
-
-
-
-
+        clansBttn = findViewById(R.id.clansBttn);
 
         // -------- BOTÓN JUGAR → abrir APK Unity --------
         playBttn.setOnClickListener(v -> {
@@ -125,6 +119,11 @@ public class PortalPageActivity extends AppCompatActivity {
         // -------- BOTÓN LOGOUT --------
         Button logoutButton = findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(v -> logout());
+
+        clansBttn.setOnClickListener(v -> {
+                Intent intent = new Intent(PortalPageActivity.this, edu.upc.dsa_android_DriveNdodge.ui.clan.ClansActivity.class);
+                startActivity(intent);
+        });
 
 
 

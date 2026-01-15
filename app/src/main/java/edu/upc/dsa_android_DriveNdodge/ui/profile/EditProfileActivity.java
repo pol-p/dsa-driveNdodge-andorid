@@ -31,7 +31,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private ImageView ivEditAvatar;
     private String selectedAvatar = "avatar_default.webp";
-    private static final String BASE_URL_IMG = "https://dsa5.upc.edu/img/avatar/";
+    private static final String BASE_URL_IMG = RetrofitClient.getBaseUrl() + "img/avatar/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

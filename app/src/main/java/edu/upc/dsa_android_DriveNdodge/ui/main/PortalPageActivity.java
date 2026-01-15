@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.upc.dsa_android_DriveNdodge.R;
+import edu.upc.dsa_android_DriveNdodge.ui.chat.ChatActivity;
 import edu.upc.dsa_android_DriveNdodge.ui.profile.ViewProfileActivity;
 import edu.upc.dsa_android_DriveNdodge.ui.ranking.ViewRankingActivity;
 import edu.upc.dsa_android_DriveNdodge.ui.shop.ShopActivity;
@@ -45,6 +47,7 @@ public class PortalPageActivity extends AppCompatActivity {
         rankBttn = findViewById(R.id.rankBttn);
         inventoryBttn = findViewById(R.id.inventoryBttn);
         clansBttn = findViewById(R.id.clansBttn);
+        View btnChat = findViewById(R.id.btn_chat_custom);
 
         // -------- BOTÓN JUGAR → abrir APK Unity --------
         playBttn.setOnClickListener(v -> {
@@ -125,7 +128,10 @@ public class PortalPageActivity extends AppCompatActivity {
                 startActivity(intent);
         });
 
-
+        btnChat.setOnClickListener(v -> {
+            Intent intent = new Intent(PortalPageActivity.this, ChatActivity.class);
+            startActivity(intent);
+        });
 
     }
 

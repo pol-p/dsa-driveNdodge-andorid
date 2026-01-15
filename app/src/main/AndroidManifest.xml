@@ -35,7 +35,7 @@
         <activity android:name=".ui.inventario.InventarioActivity"/>
         <activity android:name=".ui.profile.EditProfileActivity" />
         <activity android:name=".ui.clan.ClansActivity" />
-
+        <activity android:name=".ui.chat.ChatActivity" />
 
     </application>
 

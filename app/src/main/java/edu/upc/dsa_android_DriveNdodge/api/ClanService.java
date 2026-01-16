@@ -16,4 +16,7 @@ public interface ClanService {
     @GET("/v1/clan/all")
     Call<List<Clan>> getAllClans();
 
+    @POST("/v1/clan/create")
+    Call<Clan> createClan(@Body Clan clan);
+
 }

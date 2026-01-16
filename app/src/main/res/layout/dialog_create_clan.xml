@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#D9000000">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FUNDAR NUEVO CLAN"
+        android:textColor="#FFEB3B"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:fontFamily="@font/pressstart2pregular"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre del Clan"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/vt323regular"
+        android:textSize="18sp"/>
+
+    <EditText
+        android:id="@+id/etClanName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FF9800"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/vt323regular"
+        android:textSize="18sp"
+        android:hint="Ej: Pilotos"
+        android:textColorHint="#88FFFFFF"
+        android:inputType="textCapWords"
+        android:maxLines="1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Elige tu Emblema"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/vt323regular"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"/>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imgDefault"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/clan_default"
+                android:tag="clan_default.png"
+                android:padding="4dp"
+                android:layout_marginEnd="10dp"/>
+            <ImageView
+                android:id="@+id/imgClan1"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/clan1"
+                android:tag="clan1.png"
+                android:padding="4dp"
+                android:layout_marginEnd="10dp"/>
+
+            <ImageView
+                android:id="@+id/imgClan2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/clan2"
+                android:tag="clan2.png"
+                android:padding="4dp"
+                android:layout_marginEnd="10dp"/>
+
+            <ImageView
+                android:id="@+id/imgClan3"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/clan3"
+                android:tag="clan3.png"
+                android:padding="4dp"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descripción / Lema"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/vt323regular"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/etClanDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FF9800"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/vt323regular"
+        android:textSize="18sp"
+        android:hint="Lema del equipo..."
+        android:textColorHint="#88FFFFFF"
+        android:inputType="textMultiLine"
+        android:maxLines="3"/>
+
+</LinearLayout>

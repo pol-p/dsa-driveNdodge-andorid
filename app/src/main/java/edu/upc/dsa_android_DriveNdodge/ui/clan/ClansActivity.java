@@ -28,6 +28,7 @@ public class ClansActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private ClanService clanService;
     private Button btnCreateClan, btnBack;
+    private String selectedImageName = "clan_default.png";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class ClansActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
 
         btnCreateClan.setOnClickListener(v -> {
-            Toast.makeText(this, "Función Crear Clan: Próximamente", Toast.LENGTH_SHORT).show();
+            showCreateClanDialog();
         });
 
         loadClans();
@@ -78,6 +79,77 @@ public class ClansActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Clan>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(ClansActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showCreateClanDialog() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_create_clan, null);
+
+        final android.widget.EditText etName = view.findViewById(R.id.etClanName);
+        final android.widget.EditText etDesc = view.findViewById(R.id.etClanDesc);
+
+        android.widget.ImageView imgDef = view.findViewById(R.id.imgDefault);
+        android.widget.ImageView img1 = view.findViewById(R.id.imgClan1);
+        android.widget.ImageView img2 = view.findViewById(R.id.imgClan2);
+        android.widget.ImageView img3 = view.findViewById(R.id.imgClan3);
+        android.widget.ImageView[] images = {imgDef, img1, img2, img3};
+
+        View.OnClickListener imgListener = v -> {
+            for (android.widget.ImageView img : images) img.setBackground(null);
+            v.setBackgroundResource(R.drawable.orangerectanglebttn);
+            if (v.getTag() != null) selectedImageName = v.getTag().toString();
+        };
+
+        imgDef.setOnClickListener(imgListener);
+        img1.setOnClickListener(imgListener);
+        img2.setOnClickListener(imgListener);
+        img3.setOnClickListener(imgListener);
+        selectedImageName = "clan_default.png"; // Reset
+
+        builder.setView(view);
+
+        builder.setPositiveButton("CREAR", null);
+        builder.setNegativeButton("CANCELAR", (dialog, which) -> dialog.dismiss());
+
+        android.app.AlertDialog dialog = builder.create();
+        dialog.show();
+
+        dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            String name = etName.getText().toString().trim();
+            String desc = etDesc.getText().toString().trim();
+
+            if (!name.isEmpty() && !desc.isEmpty()) {
+                createNewClan(name, desc, selectedImageName);
+                dialog.dismiss();
+            } else {
+                Toast.makeText(ClansActivity.this, "Rellena todos los campos", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void createNewClan(String name, String desc, String imgName) {
+        progressBar.setVisibility(View.VISIBLE);
+
+        Clan newClan = new Clan(name, desc, imgName);
+
+        clanService.createClan(newClan).enqueue(new Callback<Clan>() {
+            @Override
+            public void onResponse(Call<Clan> call, Response<Clan> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    Toast.makeText(ClansActivity.this, "¡Clan creado!", Toast.LENGTH_SHORT).show();
+                    loadClans(); // Recargamos la lista al instante
+                } else {
+                    Toast.makeText(ClansActivity.this, "Error: Nombre duplicado o datos mal", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Clan> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(ClansActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT).show();
             }

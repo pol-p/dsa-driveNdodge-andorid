@@ -8,9 +8,10 @@ public class Clan {
 
     public Clan() {}
 
-    public Clan(String nombre, String descripcion) {
+    public Clan(String nombre, String descripcion, String imagen) {
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.imagen = imagen;
     }
 
     public int getId() { return id; }

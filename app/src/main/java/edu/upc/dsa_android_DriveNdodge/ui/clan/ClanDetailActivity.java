@@ -1,6 +1,7 @@
 package edu.upc.dsa_android_DriveNdodge.ui.clan;
 
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,11 @@ public class ClanDetailActivity extends AppCompatActivity {
     private ImageView ivProfile;
     private RecyclerView recyclerMembers;
     private ClanService clanService;
+    private Button btnJoinLeave;
+    private String clanName;
+    private String username;
+    private boolean isMember = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,22 @@ public class ClanDetailActivity extends AppCompatActivity {
         tvDesc = findViewById(R.id.tvClanDesc);
         ivProfile = findViewById(R.id.ivClanProfile);
         recyclerMembers = findViewById(R.id.recyclerMembers);
+        btnJoinLeave = findViewById(R.id.btnJoinLeaveClan);
+
+        btnJoinLeave.setOnClickListener(v -> {
+            if (isMember) {
+                leaveClan();
+            } else {
+                joinClan();
+            }
+        });
+
+
+
+        clanName = getIntent().getStringExtra("clanNombre");
+        username = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+                .getString("username", null);
+
 
         recyclerMembers.setLayoutManager(new LinearLayoutManager(this));
         clanService = RetrofitClient.getClient().create(ClanService.class);
@@ -71,9 +93,18 @@ public class ClanDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    List<Usuario> members = response.body();
                     recyclerMembers.setAdapter(
                             new ClanMembersAdapter(response.body())
                     );
+                    isMember = false;
+                    for (Usuario u : members) {
+                        if (u.getUsername().equals(username)) {
+                            isMember = true;
+                            break;
+                        }
+                    }
+                    updateJoinLeaveButton();
                 }
             }
 
@@ -84,4 +115,96 @@ public class ClanDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void updateJoinLeaveButton() {
+        if (isMember) {
+            btnJoinLeave.setText("SALIR DEL CLAN");
+            btnJoinLeave.setBackgroundResource(R.drawable.redrectanglebttn);
+        } else {
+            btnJoinLeave.setText("UNIRSE AL CLAN");
+            btnJoinLeave.setBackgroundResource(R.drawable.bluerectanglebttn);
+        }
+    }
+
+    private void joinClan() {
+        Usuario u = new Usuario();
+        u.setUsername(username);
+
+        clanService.joinClan(clanName, u).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+                if (response.isSuccessful()) {
+                    Toast.makeText(
+                            ClanDetailActivity.this,
+                            "Te has unido al clan",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                    loadMembers(clanName);
+
+                } else if (response.code() == 409) {
+                    Toast.makeText(
+                            ClanDetailActivity.this,
+                            "No puedes unirte a un clan si ya eres miembro de otro",
+                            Toast.LENGTH_LONG
+                    ).show();
+
+                } else if (response.code() == 400) {
+                    Toast.makeText(
+                            ClanDetailActivity.this,
+                            "Usuario no válido",
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(
+                        ClanDetailActivity.this,
+                        "Error de conexión",
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        });
+    }
+
+    private void leaveClan() {
+        Usuario u = new Usuario();
+        u.setUsername(username);
+
+        clanService.leaveClan(u).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+                if (response.isSuccessful()) {
+                    Toast.makeText(
+                            ClanDetailActivity.this,
+                            "Has salido del clan",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                    loadMembers(clanName);
+                    setResult(RESULT_OK);
+                    finish();
+
+                } else if (response.code() == 400) {
+                    Toast.makeText(
+                            ClanDetailActivity.this,
+                            "Usuario no válido",
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(
+                        ClanDetailActivity.this,
+                        "Error de conexión",
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        });
+    }
+
 }

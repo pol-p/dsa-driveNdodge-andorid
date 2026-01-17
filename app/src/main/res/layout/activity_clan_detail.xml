@@ -82,6 +82,23 @@
                         android:fontFamily="@font/vt323regular"
                         android:gravity="center" />
 
+                    <Button
+                        android:id="@+id/btnJoinLeaveClan"
+                        android:layout_width="220dp"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="center"
+                        android:text="UNIRSE"
+                        android:textSize="11sp"
+                        android:textColor="@android:color/white"
+                        android:fontFamily="@font/pressstart2pregular"
+                        android:background="@drawable/bluerectanglebttn"
+                        android:backgroundTint="@null"
+                        android:clickable="true"
+                        android:focusable="true"
+
+                        app:backgroundTint="@null" />
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

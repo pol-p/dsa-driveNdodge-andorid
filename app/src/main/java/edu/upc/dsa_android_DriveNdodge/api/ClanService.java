@@ -22,11 +22,12 @@ public interface ClanService {
     @GET("/v1/clan/{clanName}/members")
     Call<List<Usuario>> getMembers(@Path("clanName") String clanName);
 
-    @PUT("v1/clan/join/{clanName}")
-    Call<Void> joinClan(@Path("clanName") String clanName);
+    @PUT("/v1/clan/join/{clanName}")
+    Call<Void> joinClan(@Path("clanName") String clanName, @Body Usuario u);
 
-    @PUT("v1/clan/leave")
-    Call<Void> leaveClan();
+    @PUT("/v1/clan/leave")
+    Call<Void> leaveClan(@Body Usuario u);
+
 
 
 }

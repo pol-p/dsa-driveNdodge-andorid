@@ -29,6 +29,8 @@ public class ClansActivity extends AppCompatActivity {
     private ClanService clanService;
     private Button btnCreateClan, btnBack;
     private String selectedImageName = "clan_default.png";
+    private static final int REQUEST_CLAN_DETAIL = 1001;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,7 @@ public class ClansActivity extends AppCompatActivity {
                         intent.putExtra("clanNombre", clan.getNombre());
                         intent.putExtra("clanDescripcion", clan.getDescripcion());
                         intent.putExtra("clanImagen", clan.getImagen());
-                        startActivity(intent);
+                        startActivityForResult(intent, REQUEST_CLAN_DETAIL);
                         Toast.makeText(ClansActivity.this, "Has pulsado: " + clan.getNombre(), Toast.LENGTH_SHORT).show();
                     });
 
@@ -156,6 +158,16 @@ public class ClansActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CLAN_DETAIL && resultCode == RESULT_OK) {
+            loadClans();
+        }
+    }
+
 
     @Override
     protected void onResume() {

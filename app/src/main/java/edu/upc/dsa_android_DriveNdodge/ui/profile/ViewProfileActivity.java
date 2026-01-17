@@ -37,7 +37,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     private ImageView ivClanLogo;
     private static final int EDIT_PROFILE_REQUEST = 101;
     private static final String BASE_URL_IMG = RetrofitClient.getBaseUrl() + "img/avatar/";
-    private static final String BASE_URL_CLAN = RetrofitClient.getBaseUrl() + "img/clan/";
+    private static final String BASE_URL_CLAN = RetrofitClient.getBaseUrl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

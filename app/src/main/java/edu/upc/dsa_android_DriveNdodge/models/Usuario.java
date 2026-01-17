@@ -8,6 +8,8 @@ public class Usuario {
     private String apellido;
     private String email;
     private String fechaNacimiento;
+    private String imagenPerfil;
+
 
     // constructor para el register
     public Usuario(String username, String password, String nombre, String apellido, String email, String fechaNacimiento) {
@@ -17,6 +19,7 @@ public class Usuario {
         this.apellido = apellido;
         this.email = email;
         this.fechaNacimiento = fechaNacimiento;
+        this.imagenPerfil = "avatar_default.webp";
     }
     // constructor para el login
     public Usuario(String username, String password) {
@@ -44,7 +47,11 @@ public class Usuario {
     public String getFechaNacimiento() {return fechaNacimiento;}
     public void setFechaNacimiento(String fechaNacimiento) {this.fechaNacimiento = fechaNacimiento;}
 
+    public String getImagenPerfil() {
+        return imagenPerfil;
+    }
 
-
-
+    public void setImagenPerfil(String imagenPerfil) {
+        this.imagenPerfil = imagenPerfil;
+    }
 }

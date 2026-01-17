@@ -3,6 +3,7 @@ package edu.upc.dsa_android_DriveNdodge.api;
 import java.util.List;
 
 import edu.upc.dsa_android_DriveNdodge.models.Clan;
+import edu.upc.dsa_android_DriveNdodge.models.ClanCreationRequest;
 import edu.upc.dsa_android_DriveNdodge.models.Usuario;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -17,7 +18,7 @@ public interface ClanService {
     Call<List<Clan>> getAllClans();
 
     @POST("/v1/clan/create")
-    Call<Clan> createClan(@Body Clan clan);
+    Call<Clan> createClan(@Body ClanCreationRequest request);
 
     @GET("/v1/clan/{clanName}/members")
     Call<List<Usuario>> getMembers(@Path("clanName") String clanName);

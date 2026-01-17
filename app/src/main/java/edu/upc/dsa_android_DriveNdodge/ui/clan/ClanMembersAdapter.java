@@ -8,10 +8,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import edu.upc.dsa_android_DriveNdodge.R;
+import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.models.Usuario;
 
 public class ClanMembersAdapter extends RecyclerView.Adapter<ClanMembersAdapter.ViewHolder> {
@@ -34,7 +37,16 @@ public class ClanMembersAdapter extends RecyclerView.Adapter<ClanMembersAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Usuario usuario = members.get(position);
         holder.tvUsername.setText(usuario.getUsername());
-        holder.ivUserAvatar.setImageResource(R.mipmap.ic_launcher_round);
+        String baseUrl = RetrofitClient.getBaseUrl();
+
+        String nombreImagen = usuario.getImagenPerfil();
+        if (nombreImagen == null || nombreImagen.isEmpty()) {
+            nombreImagen = "logo.png";
+        }
+
+        String urlCompleta = baseUrl + "img/avatar/" + nombreImagen;
+
+        Picasso.get().load(urlCompleta).placeholder(R.drawable.logo).error(R.drawable.logo).into(holder.ivUserAvatar);
     }
 
     @Override

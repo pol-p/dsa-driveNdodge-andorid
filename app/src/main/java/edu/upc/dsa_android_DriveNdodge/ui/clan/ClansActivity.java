@@ -1,6 +1,7 @@
 package edu.upc.dsa_android_DriveNdodge.ui.clan;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.ClanService;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.models.Clan;
+import edu.upc.dsa_android_DriveNdodge.models.ClanCreationRequest;
 import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -138,17 +140,31 @@ public class ClansActivity extends AppCompatActivity {
     private void createNewClan(String name, String desc, String imgName) {
         progressBar.setVisibility(View.VISIBLE);
 
-        Clan newClan = new Clan(name, desc, imgName);
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        String currentUsername = prefs.getString("username", null);
 
-        clanService.createClan(newClan).enqueue(new Callback<Clan>() {
+        if (currentUsername == null) {
+            progressBar.setVisibility(View.GONE);
+            ToastUtils.show(this, "Error: Sesión caducada. Haz login de nuevo.", Toast.LENGTH_LONG);
+            return;
+        }
+
+        ClanCreationRequest request = new ClanCreationRequest(name, desc, imgName, currentUsername);
+
+        clanService.createClan(request).enqueue(new Callback<Clan>() {
             @Override
             public void onResponse(Call<Clan> call, Response<Clan> response) {
                 progressBar.setVisibility(View.GONE);
+
                 if (response.isSuccessful()) {
-                    ToastUtils.show(ClansActivity.this, "¡Clan creado!", Toast.LENGTH_SHORT);
-                    loadClans(); // Recargamos la lista al instante
+                    ToastUtils.show(ClansActivity.this, "¡Clan creado! Ya eres miembro.", Toast.LENGTH_SHORT);
+                    loadClans();
+
+                } else if (response.code() == 409) {
+                    ToastUtils.show(ClansActivity.this, "¡Error: Ya perteneces a un clan! Sal primero.", Toast.LENGTH_LONG);
+
                 } else {
-                    ToastUtils.show(ClansActivity.this, "Error: Nombre duplicado o datos mal", Toast.LENGTH_SHORT);
+                    ToastUtils.show(ClansActivity.this, "Error: Nombre de clan en uso o inválido", Toast.LENGTH_SHORT);
                 }
             }
 

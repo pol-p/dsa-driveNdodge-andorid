@@ -9,7 +9,7 @@
         android:id="@+id/bgImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/backclean3"
+        android:src="@drawable/backclean2"
         android:scaleType="centerCrop" />
 
     <!-- Contingut principal -->

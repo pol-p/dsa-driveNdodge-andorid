@@ -18,6 +18,7 @@ import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.ClanService;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.models.Usuario;
+import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -110,8 +111,8 @@ public class ClanDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Usuario>> call, Throwable t) {
-                Toast.makeText(ClanDetailActivity.this,
-                        "Error al cargar miembros", Toast.LENGTH_SHORT).show();
+                ToastUtils.show(ClanDetailActivity.this,
+                        "Error al cargar miembros", Toast.LENGTH_SHORT);
             }
         });
     }
@@ -135,36 +136,20 @@ public class ClanDetailActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
 
                 if (response.isSuccessful()) {
-                    Toast.makeText(
-                            ClanDetailActivity.this,
-                            "Te has unido al clan",
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    ToastUtils.show(ClanDetailActivity.this, "Te has unido al clan", Toast.LENGTH_SHORT);
                     loadMembers(clanName);
 
                 } else if (response.code() == 409) {
-                    Toast.makeText(
-                            ClanDetailActivity.this,
-                            "No puedes unirte a un clan si ya eres miembro de otro",
-                            Toast.LENGTH_LONG
-                    ).show();
+                    ToastUtils.show(ClanDetailActivity.this, "No puedes unirte a un clan si ya eres miembro de otro", Toast.LENGTH_LONG);
 
                 } else if (response.code() == 400) {
-                    Toast.makeText(
-                            ClanDetailActivity.this,
-                            "Usuario no válido",
-                            Toast.LENGTH_LONG
-                    ).show();
+                    ToastUtils.show(ClanDetailActivity.this, "Usuario no válido", Toast.LENGTH_LONG);
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(
-                        ClanDetailActivity.this,
-                        "Error de conexión",
-                        Toast.LENGTH_SHORT
-                ).show();
+                ToastUtils.show(ClanDetailActivity.this, "Error de conexión", Toast.LENGTH_SHORT);
             }
         });
     }
@@ -178,31 +163,19 @@ public class ClanDetailActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
 
                 if (response.isSuccessful()) {
-                    Toast.makeText(
-                            ClanDetailActivity.this,
-                            "Has salido del clan",
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    ToastUtils.show(ClanDetailActivity.this, "Has salido del clan", Toast.LENGTH_SHORT);
                     loadMembers(clanName);
                     setResult(RESULT_OK);
                     finish();
 
                 } else if (response.code() == 400) {
-                    Toast.makeText(
-                            ClanDetailActivity.this,
-                            "Usuario no válido",
-                            Toast.LENGTH_LONG
-                    ).show();
+                    ToastUtils.show(ClanDetailActivity.this, "Usuario no válido", Toast.LENGTH_LONG);
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(
-                        ClanDetailActivity.this,
-                        "Error de conexión",
-                        Toast.LENGTH_SHORT
-                ).show();
+                ToastUtils.show(ClanDetailActivity.this, "Error de conexión", Toast.LENGTH_SHORT);
             }
         });
     }

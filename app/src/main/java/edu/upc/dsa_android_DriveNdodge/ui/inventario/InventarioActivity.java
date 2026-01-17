@@ -22,6 +22,7 @@ import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.api.ShopService;
 import edu.upc.dsa_android_DriveNdodge.models.ItemInventario;
 import edu.upc.dsa_android_DriveNdodge.ui.main.PortalPageActivity;
+import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,7 +60,7 @@ public class InventarioActivity extends AppCompatActivity {
         if (username != null) {
             loadInventario();
         } else {
-            Toast.makeText(this, "Error: Usuario no identificado", Toast.LENGTH_SHORT).show();
+            ToastUtils.show(this, "Error: Usuario no identificado", Toast.LENGTH_SHORT);
             finish();
         }
     }
@@ -85,7 +86,7 @@ public class InventarioActivity extends AppCompatActivity {
                         tvEmptyView.setVisibility(View.VISIBLE);
                     }
                 } else {
-                    Toast.makeText(InventarioActivity.this, "Error al cargar inventario: " + response.code(), Toast.LENGTH_SHORT).show();
+                    ToastUtils.show(InventarioActivity.this, "Error al cargar inventario: " + response.code(), Toast.LENGTH_SHORT);
                 }
             }
 
@@ -93,7 +94,7 @@ public class InventarioActivity extends AppCompatActivity {
             public void onFailure(Call<List<ItemInventario>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 Log.e("InventarioActivity", "Error network", t);
-                Toast.makeText(InventarioActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT).show();
+                ToastUtils.show(InventarioActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT);
             }
         });
     }

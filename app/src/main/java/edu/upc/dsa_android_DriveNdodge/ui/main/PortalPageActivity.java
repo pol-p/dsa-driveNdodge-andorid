@@ -17,6 +17,7 @@ import edu.upc.dsa_android_DriveNdodge.ui.ranking.ViewRankingActivity;
 import edu.upc.dsa_android_DriveNdodge.ui.shop.ShopActivity;
 import edu.upc.dsa_android_DriveNdodge.ui.inventario.InventarioActivity;
 import edu.upc.dsa_android_DriveNdodge.models.*;
+import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 
 
 public class PortalPageActivity extends AppCompatActivity {
@@ -53,7 +54,7 @@ public class PortalPageActivity extends AppCompatActivity {
         playBttn.setOnClickListener(v -> {
 
             if (username == null) {
-                Toast.makeText(this, "Error: vuelve a iniciar sesión", Toast.LENGTH_LONG).show();
+                ToastUtils.show(this, "Error: vuelve a iniciar sesión", Toast.LENGTH_LONG);
                 return;
             }
 
@@ -63,11 +64,11 @@ public class PortalPageActivity extends AppCompatActivity {
                         getPackageManager().getLaunchIntentForPackage(UNITY_PACKAGE);
 
                 if (launchIntent == null) {
-                    Toast.makeText(
+                    ToastUtils.show(
                             this,
                             "No se encontró la app del juego Unity instalada",
                             Toast.LENGTH_LONG
-                    ).show();
+                    );
                     return;
                 }
 
@@ -85,11 +86,11 @@ public class PortalPageActivity extends AppCompatActivity {
 
             } catch (Exception e) {
 
-                Toast.makeText(
+                ToastUtils.show(
                         getApplicationContext(),
                         "Error al abrir el juego Unity",
                         Toast.LENGTH_SHORT
-                ).show();
+                );
 
                 Log.e("UnityLaunchError", "Error launching Unity", e);
             }

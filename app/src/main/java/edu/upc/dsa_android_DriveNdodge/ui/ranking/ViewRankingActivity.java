@@ -16,6 +16,7 @@ import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.api.ShopService;
 import edu.upc.dsa_android_DriveNdodge.models.UsrRanking;
 import edu.upc.dsa_android_DriveNdodge.ui.main.PortalPageActivity;
+import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,14 +64,14 @@ public class ViewRankingActivity extends AppCompatActivity {
                     RankingAdapter adapter = new RankingAdapter(ranking);
                     recyclerView.setAdapter(adapter);
                 } else {
-                    Toast.makeText(ViewRankingActivity.this, "Error al cargar ranking", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show(ViewRankingActivity.this, "Error al cargar ranking", Toast.LENGTH_SHORT);
                 }
             }
 
             @Override
             public void onFailure(Call<List<UsrRanking>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(ViewRankingActivity.this, "Error de red", Toast.LENGTH_SHORT).show();
+                ToastUtils.show(ViewRankingActivity.this, "Error de red", Toast.LENGTH_SHORT);
             }
         });
     }

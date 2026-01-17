@@ -17,6 +17,7 @@ import edu.upc.dsa_android_DriveNdodge.api.AuthService;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.models.Usuario;
 
+import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -77,21 +78,21 @@ public class RegisterActivity extends AppCompatActivity {
                 nombre.isEmpty() || apellido.isEmpty() || gmail.isEmpty() ||
                 dia.isEmpty() || mes.isEmpty() || ano.isEmpty()) {
             Log.i(TAG, "Campos vacíos en el formulario de registro");
-            Toast.makeText(this, "Por favor rellena todos los campos", Toast.LENGTH_SHORT).show();
+            ToastUtils.show(this, "Por favor rellena todos los campos", Toast.LENGTH_SHORT);
             return;
         }
 
         // Validación 2: Formato de email válido
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(gmail).matches()) {
             Log.i(TAG, "Formato de email inválido: " + gmail);
-            Toast.makeText(this, "Por favor ingresa un email válido (ej: usuario@gmail.com)", Toast.LENGTH_SHORT).show();
+            ToastUtils.show(this, "Por favor ingresa un email válido (ej: usuario@gmail.com)", Toast.LENGTH_SHORT);
             return;
         }
 
         // Validación 3: Contraseñas coincidentes
         if(!password.equals(passwordConfirm)) {
             Log.i(TAG, "Contraseñas no coinciden para usuario: " + username);
-            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            ToastUtils.show(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT);
             return;
         }
 
@@ -103,13 +104,13 @@ public class RegisterActivity extends AppCompatActivity {
 
             if (diaInt < 1 || diaInt > 31 || mesInt < 1 || mesInt > 12 || anoInt < 1900 || anoInt > 2025) {
                 Log.i(TAG, "Fecha inválida: " + diaInt + "/" + mesInt + "/" + anoInt);
-                Toast.makeText(this, "Fecha de nacimiento inválida. Verifica día (1-31), mes (1-12) y año (1900-2025)", Toast.LENGTH_SHORT).show();
+                ToastUtils.show(this, "Fecha de nacimiento inválida. Verifica día (1-31), mes (1-12) y año (1900-2025)", Toast.LENGTH_SHORT);
                 return;
             }
 
         } catch (NumberFormatException e) {
             Log.e(TAG, "Error al parsear fecha", e);
-            Toast.makeText(this, "Fecha de nacimiento inválida. Verifica día (1-31), mes (1-12) y año (1900-2025)", Toast.LENGTH_SHORT).show();
+            ToastUtils.show(this, "Fecha de nacimiento inválida. Verifica día (1-31), mes (1-12) y año (1900-2025)", Toast.LENGTH_SHORT);
             return;
         }
 
@@ -126,13 +127,13 @@ public class RegisterActivity extends AppCompatActivity {
                 if (progressBar != null) progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
                     Log.i(TAG, "Registro exitoso para usuario: " + username);
-                    Toast.makeText(RegisterActivity.this, "¡Registro exitoso! Bienvenido", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show(RegisterActivity.this, "¡Registro exitoso! Bienvenido", Toast.LENGTH_SHORT);
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
                     Log.i(TAG, "Error en registro: código " + response.code());
-                    Toast.makeText(RegisterActivity.this, "Error: usuario ya existente o datos incorrectos", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show(RegisterActivity.this, "Error: usuario ya existente o datos incorrectos", Toast.LENGTH_SHORT);
                 }
             }
 
@@ -140,7 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onFailure(Call<Usuario> call, Throwable t) {
                 if (progressBar != null) progressBar.setVisibility(View.GONE);
                 Log.e(TAG, "Error de conexión al registrar usuario: " + username, t);
-                Toast.makeText(RegisterActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                ToastUtils.show(RegisterActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT);
             }
         });
     }

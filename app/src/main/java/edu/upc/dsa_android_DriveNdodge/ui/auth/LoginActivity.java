@@ -18,6 +18,7 @@ import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.models.Usuario;
 
 import edu.upc.dsa_android_DriveNdodge.ui.main.PortalPageActivity;
+import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(username.isEmpty() || password.isEmpty()) {
             Log.i(TAG, "Campos vacíos: username o password");
-            Toast.makeText(this, "Por favor rellena todos los campos", Toast.LENGTH_SHORT).show();
+            ToastUtils.show(this, "Por favor rellena todos los campos", Toast.LENGTH_SHORT);
             return;
         }
         progressBar.setVisibility(View.VISIBLE); // MOSTRAR RUEDA de loadBar
@@ -81,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                             .putString("username", username)
                             .apply();
 
-                    Toast.makeText(LoginActivity.this, "Se ha iniciado sesión correctamente", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show(LoginActivity.this, "Se ha iniciado sesión correctamente", Toast.LENGTH_SHORT);
 
                     // redirigir a ShopActivity
                     Intent intent = new Intent(LoginActivity.this, PortalPageActivity.class);
@@ -89,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                 } else {
                     Log.i(TAG, "Login fallido: usuario o contraseña incorrectos");
-                    Toast.makeText(LoginActivity.this, "Error: usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show(LoginActivity.this, "Error: usuario o contraseña incorrectos", Toast.LENGTH_SHORT);
                 }
             }
 
@@ -97,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<Usuario> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 Log.e(TAG, "Error de conexión al hacer login", t);
-                Toast.makeText(LoginActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                ToastUtils.show(LoginActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT);
             }
         });
     }

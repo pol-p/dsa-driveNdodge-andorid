@@ -24,6 +24,7 @@ import edu.upc.dsa_android_DriveNdodge.models.Item;
 import edu.upc.dsa_android_DriveNdodge.models.MonedasResponse;
 
 import edu.upc.dsa_android_DriveNdodge.ui.main.PortalPageActivity;
+import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -91,14 +92,14 @@ public class ShopActivity extends AppCompatActivity {
 
                     recyclerView.setAdapter(adapter);
                 } else {
-                    Toast.makeText(ShopActivity.this, "Error al cargar items", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show(ShopActivity.this, "Error al cargar items", Toast.LENGTH_SHORT);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Item>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(ShopActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT).show();
+                ToastUtils.show(ShopActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT);
                 Log.e("ShopActivity", "Error: " + t.getMessage());
             }
         });
@@ -113,18 +114,18 @@ public class ShopActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
 
                 if (response.isSuccessful()) {
-                    Toast.makeText(ShopActivity.this, "¡Comprado " + item.getNombre() + "!", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show(ShopActivity.this, "¡Comprado " + item.getNombre() + "!", Toast.LENGTH_SHORT);
                     loadCoins(); // Actualizar monedas
                 } else {
                     // Código 404 o 500 del backend
-                    Toast.makeText(ShopActivity.this, "Error: Saldo insuficiente o fallo", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show(ShopActivity.this, "Error: Saldo insuficiente o fallo", Toast.LENGTH_SHORT);
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(ShopActivity.this, "Error de red al comprar", Toast.LENGTH_SHORT).show();
+                ToastUtils.show(ShopActivity.this, "Error de red al comprar", Toast.LENGTH_SHORT);
             }
         });
     }

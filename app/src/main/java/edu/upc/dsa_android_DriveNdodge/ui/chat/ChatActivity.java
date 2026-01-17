@@ -19,6 +19,7 @@ import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.models.ChatMessage;
 import edu.upc.dsa_android_DriveNdodge.models.ChatRequest;
 import edu.upc.dsa_android_DriveNdodge.models.MessageResponse;
+import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,7 +82,7 @@ public class ChatActivity extends AppCompatActivity {
                     messageList.add(new ChatMessage(reply, false));
                     updateList();
                 } else {
-                    Toast.makeText(ChatActivity.this, "Error de comunicación: " + response.code(), Toast.LENGTH_SHORT).show();
+                    ToastUtils.show(ChatActivity.this, "Error de comunicación: " + response.code(), Toast.LENGTH_SHORT);
                 }
             }
 

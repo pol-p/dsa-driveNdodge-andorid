@@ -17,6 +17,7 @@ import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.ClanService;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.models.Clan;
+import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -71,19 +72,19 @@ public class ClansActivity extends AppCompatActivity {
                         intent.putExtra("clanDescripcion", clan.getDescripcion());
                         intent.putExtra("clanImagen", clan.getImagen());
                         startActivityForResult(intent, REQUEST_CLAN_DETAIL);
-                        Toast.makeText(ClansActivity.this, "Has pulsado: " + clan.getNombre(), Toast.LENGTH_SHORT).show();
+                        ToastUtils.show(ClansActivity.this, "Has pulsado: " + clan.getNombre(), Toast.LENGTH_SHORT);
                     });
 
                     recyclerView.setAdapter(adapter);
                 } else {
-                    Toast.makeText(ClansActivity.this, "Error al cargar clanes", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show(ClansActivity.this, "Error al cargar clanes", Toast.LENGTH_SHORT);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Clan>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(ClansActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT).show();
+                ToastUtils.show(ClansActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT);
             }
         });
     }
@@ -129,7 +130,7 @@ public class ClansActivity extends AppCompatActivity {
                 createNewClan(name, desc, selectedImageName);
                 dialog.dismiss();
             } else {
-                Toast.makeText(ClansActivity.this, "Rellena todos los campos", Toast.LENGTH_SHORT).show();
+                ToastUtils.show(ClansActivity.this, "Rellena todos los campos", Toast.LENGTH_SHORT);
             }
         });
     }
@@ -144,17 +145,17 @@ public class ClansActivity extends AppCompatActivity {
             public void onResponse(Call<Clan> call, Response<Clan> response) {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
-                    Toast.makeText(ClansActivity.this, "¡Clan creado!", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show(ClansActivity.this, "¡Clan creado!", Toast.LENGTH_SHORT);
                     loadClans(); // Recargamos la lista al instante
                 } else {
-                    Toast.makeText(ClansActivity.this, "Error: Nombre duplicado o datos mal", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show(ClansActivity.this, "Error: Nombre duplicado o datos mal", Toast.LENGTH_SHORT);
                 }
             }
 
             @Override
             public void onFailure(Call<Clan> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(ClansActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT).show();
+                ToastUtils.show(ClansActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT);
             }
         });
     }

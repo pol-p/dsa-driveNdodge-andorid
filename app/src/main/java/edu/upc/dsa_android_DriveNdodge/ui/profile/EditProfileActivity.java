@@ -18,6 +18,7 @@ import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.PerfilService;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.models.UsrProfile;
+import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -124,13 +125,13 @@ public class EditProfileActivity extends AppCompatActivity {
                     setResult(RESULT_OK, resultIntent);
                     finish(); // Cerramos esta pantalla
                 } else {
-                    Toast.makeText(EditProfileActivity.this, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    ToastUtils.show(EditProfileActivity.this, "Error: " + response.code(), Toast.LENGTH_SHORT);
                 }
             }
 
             @Override
             public void onFailure(Call<UsrProfile> call, Throwable t) {
-                Toast.makeText(EditProfileActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT).show();
+                ToastUtils.show(EditProfileActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT);
             }
         });
     }

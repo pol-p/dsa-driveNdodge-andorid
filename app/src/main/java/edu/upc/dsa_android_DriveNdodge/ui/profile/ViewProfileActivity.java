@@ -22,6 +22,7 @@ import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.api.ShopService;
 import edu.upc.dsa_android_DriveNdodge.models.UsrProfile;
 import edu.upc.dsa_android_DriveNdodge.ui.main.PortalPageActivity;
+import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,7 +71,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         if (username != null) {
             loadUserProfile();
         } else {
-            Toast.makeText(this, "Error: No hay sesión iniciada", Toast.LENGTH_SHORT).show();
+            ToastUtils.show(this, "Error: No hay sesión iniciada", Toast.LENGTH_SHORT);
             finish();
         }
     }
@@ -90,14 +91,14 @@ public class ViewProfileActivity extends AppCompatActivity {
                     Log.i("ViewProfileActivity", "Email devuelto: " + profile.getEmail());
                     updateUI(profile);
                 } else {
-                    Toast.makeText(ViewProfileActivity.this, "Error al cargar perfil", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show(ViewProfileActivity.this, "Error al cargar perfil", Toast.LENGTH_SHORT);
                 }
             }
 
             @Override
             public void onFailure(Call<UsrProfile> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(ViewProfileActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                ToastUtils.show(ViewProfileActivity.this, "Error de conexión", Toast.LENGTH_SHORT);
                 Log.e("ViewProfileActivity", "Error", t);
             }
         });
@@ -166,7 +167,7 @@ public class ViewProfileActivity extends AppCompatActivity {
             if (requestCode == EDIT_PROFILE_REQUEST) {
                 if (resultCode == RESULT_OK) {
                     // Si la edición fue bien, recargamos los datos del servidor
-                    Toast.makeText(this, "Perfil actualizado, recargando...", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show(this, "Perfil actualizado, recargando...", Toast.LENGTH_SHORT);
                     loadUserProfile();
                 }
             }

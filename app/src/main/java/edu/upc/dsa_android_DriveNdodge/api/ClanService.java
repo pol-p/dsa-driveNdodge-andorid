@@ -19,7 +19,7 @@ public interface ClanService {
     @POST("/v1/clan/create")
     Call<Clan> createClan(@Body Clan clan);
 
-    @GET("v1/{clanName}/members")
+    @GET("/v1/clan/{clanName}/members")
     Call<List<Usuario>> getMembers(@Path("clanName") String clanName);
 
     @PUT("v1/clan/join/{clanName}")

@@ -64,10 +64,11 @@ public class ClansActivity extends AppCompatActivity {
                     List<Clan> clans = response.body();
 
                     adapter = new ClanAdapter(clans, ClansActivity.this, clan -> {
-                        // CLICK EN UN CLAN -> IR A DETALLE
-                        // Intent intent = new Intent(ClansActivity.this, ClanDetailActivity.class);
-                        // intent.putExtra("clanName", clan.getNombre());
-                        // startActivity(intent);
+                        Intent intent = new Intent(ClansActivity.this, ClanDetailActivity.class);
+                        intent.putExtra("clanNombre", clan.getNombre());
+                        intent.putExtra("clanDescripcion", clan.getDescripcion());
+                        intent.putExtra("clanImagen", clan.getImagen());
+                        startActivity(intent);
                         Toast.makeText(ClansActivity.this, "Has pulsado: " + clan.getNombre(), Toast.LENGTH_SHORT).show();
                     });
 

@@ -23,7 +23,7 @@ public class ClanAdapter extends RecyclerView.Adapter<ClanAdapter.ClanViewHolder
     private List<Clan> clans;
     private Context context;
     private OnItemClickListener listener;
-    private final String BASE_URL_IMG = RetrofitClient.getBaseUrl() + "img/clan/";
+    private final String BASE_URL_IMG = RetrofitClient.getBaseUrl();
 
 
     public interface OnItemClickListener {

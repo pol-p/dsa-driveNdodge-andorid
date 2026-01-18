@@ -1,10 +1,13 @@
 package edu.upc.dsa_android_DriveNdodge.ui.clan;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -95,14 +98,14 @@ public class ClansActivity extends AppCompatActivity {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog_create_clan, null);
 
-        final android.widget.EditText etName = view.findViewById(R.id.etClanName);
-        final android.widget.EditText etDesc = view.findViewById(R.id.etClanDesc);
+        final EditText etName = view.findViewById(R.id.etClanName);
+        final EditText etDesc = view.findViewById(R.id.etClanDesc);
 
-        android.widget.ImageView imgDef = view.findViewById(R.id.imgDefault);
-        android.widget.ImageView img1 = view.findViewById(R.id.imgClan1);
-        android.widget.ImageView img2 = view.findViewById(R.id.imgClan2);
-        android.widget.ImageView img3 = view.findViewById(R.id.imgClan3);
-        android.widget.ImageView[] images = {imgDef, img1, img2, img3};
+        ImageView imgDef = view.findViewById(R.id.imgDefault);
+        ImageView img1 = view.findViewById(R.id.imgClan1);
+        ImageView img2 = view.findViewById(R.id.imgClan2);
+        ImageView img3 = view.findViewById(R.id.imgClan3);
+        ImageView[] images = {imgDef, img1, img2, img3};
 
         View.OnClickListener imgListener = v -> {
             for (android.widget.ImageView img : images) img.setBackground(null);
@@ -121,7 +124,7 @@ public class ClansActivity extends AppCompatActivity {
         builder.setPositiveButton("CREAR", null);
         builder.setNegativeButton("CANCELAR", (dialog, which) -> dialog.dismiss());
 
-        android.app.AlertDialog dialog = builder.create();
+        AlertDialog dialog = builder.create();
         dialog.show();
 
         dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {

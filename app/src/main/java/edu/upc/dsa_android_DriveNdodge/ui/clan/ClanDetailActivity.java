@@ -1,6 +1,7 @@
 package edu.upc.dsa_android_DriveNdodge.ui.clan;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import java.util.List;
 import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.ClanService;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
+import edu.upc.dsa_android_DriveNdodge.models.Clan;
 import edu.upc.dsa_android_DriveNdodge.models.Usuario;
 import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 import retrofit2.Call;
@@ -45,48 +47,61 @@ public class ClanDetailActivity extends AppCompatActivity {
         ivProfile = findViewById(R.id.ivClanProfile);
         recyclerMembers = findViewById(R.id.recyclerMembers);
         btnJoinLeave = findViewById(R.id.btnJoinLeaveClan);
+        findViewById(R.id.btnBackClan).setOnClickListener(v -> finish());
+
+        recyclerMembers.setLayoutManager(new LinearLayoutManager(this));
+        clanService = RetrofitClient.getClient().create(ClanService.class);
+
+        clanName = getIntent().getStringExtra("clanNombre");
+        username = getSharedPreferences("MyAppPrefs", MODE_PRIVATE).getString("username", null);
+
+        if (clanName != null) {
+            tvTitle.setText(clanName);
+            ivProfile.setImageResource(R.mipmap.ic_launcher_round); // Imagen temporal
+
+
+            loadClanInfo(clanName);
+            loadMembers(clanName);
+        }
 
         btnJoinLeave.setOnClickListener(v -> {
             if (isMember) {
                 leaveClan();
-            } else {
+            } else{
                 joinClan();
             }
         });
+    }
 
+    private void loadClanInfo(String name) {
+        // Log para confirmar que entramos aquí
+        android.util.Log.e("CLAN_DEBUG", "--> Pidiendo info del clan: " + name);
 
+        clanService.getClanInfo(name).enqueue(new Callback<Clan>() {
+            @Override
+            public void onResponse(Call<Clan> call, Response<Clan> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Clan clan = response.body();
 
-        clanName = getIntent().getStringExtra("clanNombre");
-        username = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
-                .getString("username", null);
+                    tvDesc.setText(clan.getDescripcion());
 
+                    String imgPath = clan.getImagen();
 
-        recyclerMembers.setLayoutManager(new LinearLayoutManager(this));
-        clanService = RetrofitClient.getClient().create(ClanService.class);
-        findViewById(R.id.btnBackClan).setOnClickListener(v -> finish());
+                    if (imgPath == null || imgPath.isEmpty()) {
+                        imgPath = "img/clan/clan_default.png";
+                    }
+                    Picasso.get().load(RetrofitClient.getBaseUrl() + imgPath).placeholder(R.mipmap.ic_launcher_round).error(R.drawable.redrectanglebttn).fit().centerCrop().into(ivProfile);
+                } else {
+                    android.util.Log.e("CLAN_DEBUG", "--> Error Servidor: " + response.code());
+                }
+            }
 
-        String nombre = getIntent().getStringExtra("clanNombre");
-        String desc = getIntent().getStringExtra("clanDescripcion");
-        String imagen = getIntent().getStringExtra("clanImagen");
-
-        tvTitle.setText(nombre != null ? nombre : "");
-        tvDesc.setText(desc != null ? desc : "");
-
-        if (imagen == null || imagen.isEmpty()) {
-            imagen = "img/clan/clan_default.png";
-        }
-
-        Picasso.get()
-                .load(RetrofitClient.getBaseUrl() + imagen)
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round)
-                .fit()
-                .centerCrop()
-                .into(ivProfile);
-
-        if (nombre != null) {
-            loadMembers(nombre);
-        }
+            @Override
+            public void onFailure(Call<Clan> call, Throwable t) {
+                android.util.Log.e("CLAN_DEBUG", "--> Error Conexión: " + t.getMessage());
+                ToastUtils.show(ClanDetailActivity.this, "Error de red", Toast.LENGTH_SHORT);
+            }
+        });
     }
 
     private void loadMembers(String clanName) {

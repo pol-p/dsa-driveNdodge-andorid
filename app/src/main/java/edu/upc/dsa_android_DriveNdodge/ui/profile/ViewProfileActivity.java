@@ -37,6 +37,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     private UsrProfile currentProfile;
     private ImageView ivClanLogo;
     private static final int EDIT_PROFILE_REQUEST = 101;
+    private static final int CLAN_DETAIL_REQUEST = 102;
     private static final String BASE_URL_IMG = RetrofitClient.getBaseUrl() + "img/avatar/";
     private static final String BASE_URL_CLAN = RetrofitClient.getBaseUrl();
 
@@ -140,10 +141,23 @@ public class ViewProfileActivity extends AppCompatActivity {
                 imagenClan = "clan_default.png";
             }
             Picasso.get().load(BASE_URL_CLAN + imagenClan).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).fit().centerCrop().into(ivClanLogo);
+
+            View.OnClickListener irAlClan = v -> {
+                Intent intent = new Intent(ViewProfileActivity.this, edu.upc.dsa_android_DriveNdodge.ui.clan.ClanDetailActivity.class);
+                intent.putExtra("clanNombre", p.getClanNombre());
+
+                startActivityForResult(intent, CLAN_DETAIL_REQUEST);
+            };
+
+            tvClanName.setOnClickListener(irAlClan);
+            ivClanLogo.setOnClickListener(irAlClan);
         } else {
             // Si no tiene clan
             tvClanName.setText("Sin Clan");
             ivClanLogo.setVisibility(View.GONE);
+
+            tvClanName.setOnClickListener(null);
+            ivClanLogo.setOnClickListener(null);
         }
 
         btnEditProfile.setOnClickListener(v -> {
@@ -168,6 +182,11 @@ public class ViewProfileActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     // Si la edición fue bien, recargamos los datos del servidor
                     ToastUtils.show(this, "Perfil actualizado, recargando...", Toast.LENGTH_SHORT);
+                    loadUserProfile();
+                }
+            }
+            if (requestCode == CLAN_DETAIL_REQUEST) {
+                if (resultCode == RESULT_OK) {
                     loadUserProfile();
                 }
             }

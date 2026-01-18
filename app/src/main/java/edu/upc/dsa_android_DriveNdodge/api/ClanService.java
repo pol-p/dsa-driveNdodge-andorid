@@ -29,6 +29,7 @@ public interface ClanService {
     @PUT("/v1/clan/leave")
     Call<Void> leaveClan(@Body Usuario u);
 
-
+    @GET("/v1/clan/{clanName}")
+    Call<Clan> getClanInfo(@Path("clanName") String clanName);
 
 }

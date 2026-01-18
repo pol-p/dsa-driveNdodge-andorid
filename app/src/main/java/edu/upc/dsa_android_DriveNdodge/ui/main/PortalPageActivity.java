@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.ui.chat.ChatActivity;
+import edu.upc.dsa_android_DriveNdodge.ui.evento.EventosActivity;
 import edu.upc.dsa_android_DriveNdodge.ui.profile.ViewProfileActivity;
 import edu.upc.dsa_android_DriveNdodge.ui.ranking.ViewRankingActivity;
 import edu.upc.dsa_android_DriveNdodge.ui.shop.ShopActivity;
@@ -22,7 +23,7 @@ import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 
 public class PortalPageActivity extends AppCompatActivity {
 
-    private Button shopBttn, perfilBttn, rankBttn, inventoryBttn, playBttn, clansBttn;
+    private Button shopBttn, perfilBttn, rankBttn, inventoryBttn, playBttn, clansBttn, eventsBttn;
 
 
     private String money;
@@ -48,6 +49,7 @@ public class PortalPageActivity extends AppCompatActivity {
         rankBttn = findViewById(R.id.rankBttn);
         inventoryBttn = findViewById(R.id.inventoryBttn);
         clansBttn = findViewById(R.id.clansBttn);
+        eventsBttn = findViewById(R.id.eventsBttn);
         View btnChat = findViewById(R.id.btn_chat_custom);
 
         // -------- BOTÓN JUGAR → abrir APK Unity --------
@@ -117,6 +119,11 @@ public class PortalPageActivity extends AppCompatActivity {
         // -------- BOTÓN INVENTARIO --------
         inventoryBttn.setOnClickListener(v -> {
             Intent intent = new Intent(PortalPageActivity.this, InventarioActivity.class);
+            startActivity(intent);
+        });
+
+        eventsBttn.setOnClickListener(v -> {
+            Intent intent = new Intent(PortalPageActivity.this, EventosActivity.class);
             startActivity(intent);
         });
 

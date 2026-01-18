@@ -138,6 +138,23 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
+                android:id="@+id/eventsBttn"
+                android:fontFamily="@font/pressstart2pregular"
+                android:layout_width="220dp"
+                android:layout_height="60dp"
+                android:background="@drawable/bluerectanglebttn"
+                android:backgroundTint="@null"
+                app:backgroundTint="@null"
+                android:text="EVENTOS"
+                android:textColor="@android:color/white"
+                android:textSize="11sp"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/clansBttn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
                 android:id="@+id/logoutButton"
                 android:fontFamily="@font/pressstart2pregular"
                 android:layout_width="220dp"
@@ -150,9 +167,10 @@
                 android:textSize="11sp"
                 android:gravity="center"
                 android:layout_marginTop="30dp"
-                app:layout_constraintTop_toBottomOf="@id/clansBttn"
+                app:layout_constraintTop_toBottomOf="@id/eventsBttn"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
+
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btn_chat_custom"

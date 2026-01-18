@@ -15,21 +15,22 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
+import edu.upc.dsa_android_DriveNdodge.models.UsrClan;
 import edu.upc.dsa_android_DriveNdodge.models.Usuario;
 
 public class ClanMembersAdapter extends RecyclerView.Adapter<ClanMembersAdapter.ViewHolder> {
 
-    private final List<Usuario> members;
+    private final List<UsrClan> members;
     private OnMemberClickListener listener;
 
     public interface OnMemberClickListener {
         void onMemberClick(String username);
     }
-    public ClanMembersAdapter(List<Usuario> members, OnMemberClickListener listener) {
+    public ClanMembersAdapter(List<UsrClan> members, OnMemberClickListener listener) {
         this.members = members;
         this.listener = listener;
     }
-    public ClanMembersAdapter(List<Usuario> members) {
+    public ClanMembersAdapter(List<UsrClan> members) {
         this.members = members;
     }
 
@@ -43,7 +44,7 @@ public class ClanMembersAdapter extends RecyclerView.Adapter<ClanMembersAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Usuario usuario = members.get(position);
+        UsrClan usuario = members.get(position);
         holder.tvUsername.setText(usuario.getUsername());
         String baseUrl = RetrofitClient.getBaseUrl();
 

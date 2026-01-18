@@ -19,6 +19,7 @@ import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.api.ClanService;
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.models.Clan;
+import edu.upc.dsa_android_DriveNdodge.models.UsrClan;
 import edu.upc.dsa_android_DriveNdodge.models.Usuario;
 import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 import retrofit2.Call;
@@ -105,11 +106,11 @@ public class ClanDetailActivity extends AppCompatActivity {
     }
 
     private void loadMembers(String clanName) {
-        clanService.getMembers(clanName).enqueue(new Callback<List<Usuario>>() {
+        clanService.getMembers(clanName).enqueue(new Callback<List<UsrClan>>() {
             @Override
-            public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
+            public void onResponse(Call<List<UsrClan>> call, Response<List<UsrClan>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Usuario> members = response.body();
+                    List<UsrClan> members = response.body();
 
                     ClanMembersAdapter adapter = new ClanMembersAdapter(members, new ClanMembersAdapter.OnMemberClickListener() {
                         @Override
@@ -124,7 +125,7 @@ public class ClanDetailActivity extends AppCompatActivity {
                             adapter
                     );
                     isMember = false;
-                    for (Usuario u : members) {
+                    for (UsrClan u : members) {
                         if (u.getUsername().equals(username)) {
                             isMember = true;
                             break;
@@ -135,7 +136,7 @@ public class ClanDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Usuario>> call, Throwable t) {
+            public void onFailure(Call<List<UsrClan>> call, Throwable t) {
                 ToastUtils.show(ClanDetailActivity.this,
                         "Error al cargar miembros", Toast.LENGTH_SHORT);
             }

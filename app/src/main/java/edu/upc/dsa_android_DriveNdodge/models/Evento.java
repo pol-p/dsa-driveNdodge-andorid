@@ -1,8 +1,8 @@
 package edu.upc.dsa_android_DriveNdodge.models;
 
 import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
-
-public class Evento {
+import java.io.Serializable;
+public class Evento implements Serializable{
     private int id;
     private String nombre;
     private String descripcion;

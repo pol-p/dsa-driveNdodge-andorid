@@ -38,6 +38,8 @@
         <activity android:name=".ui.clan.ClanDetailActivity" />
         <activity android:name=".ui.chat.ChatActivity" />
         <activity android:name=".ui.evento.EventosActivity" />
+        <activity android:name=".ui.evento.EventDetailActivity" />
+
 
     </application>
 

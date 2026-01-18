@@ -13,6 +13,8 @@ public interface EventService {
     @GET("/v1/events")
     Call<List<Evento>> getEventos();
 
+    @GET("/v1/eventos/list")
+    Call<List<Evento>> getEvents();
     @POST("/v1/events/register/{username}/{eventId}")
     Call<Void> registerEvento(@Path("username") String username, @Path("eventId") int eventId);
 }

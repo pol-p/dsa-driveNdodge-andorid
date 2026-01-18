@@ -5,6 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import edu.upc.dsa_android_DriveNdodge.api.GameService;
+import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
+import edu.upc.dsa_android_DriveNdodge.models.InventarioRequest;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class UnityInventoryReceiver extends BroadcastReceiver {
 
     public static final String ACTION = "edu.upc.dsa_android_DriveNdodge.ACTION_UNITY_INVENTORY";
@@ -19,13 +26,13 @@ public class UnityInventoryReceiver extends BroadcastReceiver {
         int shield = intent.getIntExtra("shield", -1);
         int doubler = intent.getIntExtra("doubler", -1);
 
-        Log.d("UnityInventoryReceiver",
-                "Recibido inventario Unity -> user=" + username +
-                        " magnet=" + magnet + " shield=" + shield + " doubler=" + doubler);
+        Log.d("UnityReceiver", "Unity dice -> User:" + username + " | M:" + magnet + " S:" + shield + " D:" + doubler);
 
-        if (username == null || magnet < 0 || shield < 0 || doubler < 0) return;
+        if (username == null || magnet < 0 || shield < 0 || doubler < 0) {
+            Log.e("UnityReceiver", "Datos inválidos recibidos de Unity");
+            return;
+        }
 
-        // Guardar en prefs (persistente)
         context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
                 .edit()
                 .putInt("inv_magnet", magnet)
@@ -33,7 +40,28 @@ public class UnityInventoryReceiver extends BroadcastReceiver {
                 .putInt("inv_doubler", doubler)
                 .apply();
 
-        // (Opcional) aquí llamaríais al backend para actualizar inventario.
-        // Si me pasas el endpoint, lo integro con Retrofit.
+        actualizarBackend(username, magnet, shield, doubler);
+    }
+
+    private void actualizarBackend(String username, int magnet, int shield, int doubler) {
+        GameService service = RetrofitClient.getClient().create(GameService.class);
+
+        InventarioRequest request = new InventarioRequest(username, magnet, shield, doubler);
+
+        service.updateInventario(request).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.i("UnityReceiver", "Inventario sincronizado con la nube exitosamente.");
+                } else {
+                    Log.e("UnityReceiver", "Error al guardar en nube: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("UnityReceiver", "Fallo de red al sincronizar inventario: " + t.getMessage());
+            }
+        });
     }
 }

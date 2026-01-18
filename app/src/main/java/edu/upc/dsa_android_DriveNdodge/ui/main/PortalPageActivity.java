@@ -133,7 +133,6 @@ public class PortalPageActivity extends AppCompatActivity {
         perfilBttn.setOnClickListener(v -> startActivity(new Intent(this, ViewProfileActivity.class)));
         rankBttn.setOnClickListener(v -> startActivity(new Intent(this, ViewRankingActivity.class)));
         inventoryBttn.setOnClickListener(v -> startActivity(new Intent(this, InventarioActivity.class)));
-
         eventsBttn.setOnClickListener(v -> {
             Intent intent = new Intent(PortalPageActivity.this, EventosActivity.class);
             startActivity(intent);

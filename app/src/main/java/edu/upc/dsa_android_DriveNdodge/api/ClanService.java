@@ -4,6 +4,7 @@ import java.util.List;
 
 import edu.upc.dsa_android_DriveNdodge.models.Clan;
 import edu.upc.dsa_android_DriveNdodge.models.ClanCreationRequest;
+import edu.upc.dsa_android_DriveNdodge.models.ClanRanking;
 import edu.upc.dsa_android_DriveNdodge.models.UsrClan;
 import edu.upc.dsa_android_DriveNdodge.models.Usuario;
 import retrofit2.Call;
@@ -32,5 +33,8 @@ public interface ClanService {
 
     @GET("/v1/clan/{clanName}")
     Call<Clan> getClanInfo(@Path("clanName") String clanName);
+
+    @GET("/v1/clan/ranking")
+    Call<List<ClanRanking>> getClanRanking();
 
 }

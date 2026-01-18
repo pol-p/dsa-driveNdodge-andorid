@@ -53,7 +53,7 @@ public class ClanAdapter extends RecyclerView.Adapter<ClanAdapter.ClanViewHolder
         String imgPath = clan.getImagen();
         if (imgPath == null || imgPath.isEmpty()) imgPath = "clan_default.png";
 
-        Picasso.get().load(BASE_URL_IMG + imgPath).placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).fit().centerCrop().into(holder.ivLogo);
+        Picasso.get().load(BASE_URL_IMG + imgPath).placeholder(R.drawable.logo).error(R.mipmap.ic_launcher_round).fit().centerCrop().into(holder.ivLogo);
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {

@@ -12,12 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import edu.upc.dsa_android_DriveNdodge.R;
 import edu.upc.dsa_android_DriveNdodge.ui.chat.ChatActivity;
+import edu.upc.dsa_android_DriveNdodge.ui.clan.ClanActivity;
 import edu.upc.dsa_android_DriveNdodge.ui.evento.EventosActivity;
 import edu.upc.dsa_android_DriveNdodge.ui.profile.ViewProfileActivity;
 import edu.upc.dsa_android_DriveNdodge.ui.ranking.ViewRankingActivity;
 import edu.upc.dsa_android_DriveNdodge.ui.shop.ShopActivity;
 import edu.upc.dsa_android_DriveNdodge.ui.inventario.InventarioActivity;
-import edu.upc.dsa_android_DriveNdodge.models.*;
 import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 
 
@@ -132,7 +132,7 @@ public class PortalPageActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(v -> logout());
 
         clansBttn.setOnClickListener(v -> {
-                Intent intent = new Intent(PortalPageActivity.this, edu.upc.dsa_android_DriveNdodge.ui.clan.ClansActivity.class);
+                Intent intent = new Intent(PortalPageActivity.this, ClanActivity.class);
                 startActivity(intent);
         });
 

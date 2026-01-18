@@ -16,6 +16,7 @@ import edu.upc.dsa_android_DriveNdodge.api.RetrofitClient;
 import edu.upc.dsa_android_DriveNdodge.api.ShopService;
 import edu.upc.dsa_android_DriveNdodge.models.UsrRanking;
 import edu.upc.dsa_android_DriveNdodge.ui.main.PortalPageActivity;
+import edu.upc.dsa_android_DriveNdodge.ui.profile.ViewProfileActivity;
 import edu.upc.dsa_android_DriveNdodge.ui.utils.ToastUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,8 +61,11 @@ public class ViewRankingActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     List<UsrRanking> ranking = response.body();
 
-                    // Conectamos el Adapter
-                    RankingAdapter adapter = new RankingAdapter(ranking);
+                    RankingAdapter adapter = new RankingAdapter(ranking, usernameClicked -> {
+                        Intent intent = new Intent(ViewRankingActivity.this, ViewProfileActivity.class);
+                        intent.putExtra("visitUser", usernameClicked);
+                        startActivity(intent);
+                    });
                     recyclerView.setAdapter(adapter);
                 } else {
                     ToastUtils.show(ViewRankingActivity.this, "Error al cargar ranking", Toast.LENGTH_SHORT);

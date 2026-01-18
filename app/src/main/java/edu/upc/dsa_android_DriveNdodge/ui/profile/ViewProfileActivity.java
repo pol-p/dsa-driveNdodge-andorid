@@ -146,7 +146,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         if (nombreAvatar == null || nombreAvatar.isEmpty()) {
             nombreAvatar = "avatar_default.webp";
         }
-        Picasso.get().load(BASE_URL_IMG + nombreAvatar).placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).fit().centerCrop().into(ivProfilePic);
+        Picasso.get().load(BASE_URL_IMG + nombreAvatar).placeholder(R.drawable.logo).error(R.mipmap.ic_launcher_round).fit().centerCrop().into(ivProfilePic);
 
         String finalNombreAvatar = nombreAvatar;
 
@@ -159,7 +159,7 @@ public class ViewProfileActivity extends AppCompatActivity {
             if (imagenClan == null || imagenClan.isEmpty()) {
                 imagenClan = "clan_default.png";
             }
-            Picasso.get().load(BASE_URL_CLAN + imagenClan).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).fit().centerCrop().into(ivClanLogo);
+            Picasso.get().load(BASE_URL_CLAN + imagenClan).placeholder(R.drawable.logo).error(R.mipmap.ic_launcher).fit().centerCrop().into(ivClanLogo);
 
             View.OnClickListener irAlClan = v -> {
                 Intent intent = new Intent(ViewProfileActivity.this, edu.upc.dsa_android_DriveNdodge.ui.clan.ClanDetailActivity.class);

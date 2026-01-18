@@ -27,13 +27,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ClansActivity extends AppCompatActivity {
+public class ClanActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ClanAdapter adapter;
     private ProgressBar progressBar;
     private ClanService clanService;
-    private Button btnCreateClan, btnBack;
+    private Button btnCreateClan, btnBack, btnRanking;
     private String selectedImageName = "clan_default.png";
     private static final int REQUEST_CLAN_DETAIL = 1001;
 
@@ -48,6 +48,7 @@ public class ClansActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBarClans);
         btnCreateClan = findViewById(R.id.btnCreateClan);
         btnBack = findViewById(R.id.btnBackClans);
+        btnRanking = findViewById(R.id.btnRankingClans);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         clanService = RetrofitClient.getClient().create(ClanService.class);
@@ -55,6 +56,11 @@ public class ClansActivity extends AppCompatActivity {
 
         btnCreateClan.setOnClickListener(v -> {
             showCreateClanDialog();
+        });
+
+        btnRanking.setOnClickListener(v -> {
+            Intent intent = new Intent(ClanActivity.this, ClanRankingActivity.class);
+            startActivity(intent);
         });
 
         loadClans();
@@ -71,25 +77,25 @@ public class ClansActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Clan> clans = response.body();
 
-                    adapter = new ClanAdapter(clans, ClansActivity.this, clan -> {
-                        Intent intent = new Intent(ClansActivity.this, ClanDetailActivity.class);
+                    adapter = new ClanAdapter(clans, ClanActivity.this, clan -> {
+                        Intent intent = new Intent(ClanActivity.this, ClanDetailActivity.class);
                         intent.putExtra("clanNombre", clan.getNombre());
                         intent.putExtra("clanDescripcion", clan.getDescripcion());
                         intent.putExtra("clanImagen", clan.getImagen());
                         startActivityForResult(intent, REQUEST_CLAN_DETAIL);
-                        ToastUtils.show(ClansActivity.this, "Has pulsado: " + clan.getNombre(), Toast.LENGTH_SHORT);
+                        ToastUtils.show(ClanActivity.this, "Has pulsado: " + clan.getNombre(), Toast.LENGTH_SHORT);
                     });
 
                     recyclerView.setAdapter(adapter);
                 } else {
-                    ToastUtils.show(ClansActivity.this, "Error al cargar clanes", Toast.LENGTH_SHORT);
+                    ToastUtils.show(ClanActivity.this, "Error al cargar clanes", Toast.LENGTH_SHORT);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Clan>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                ToastUtils.show(ClansActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT);
+                ToastUtils.show(ClanActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT);
             }
         });
     }
@@ -135,7 +141,7 @@ public class ClansActivity extends AppCompatActivity {
                 createNewClan(name, desc, selectedImageName);
                 dialog.dismiss();
             } else {
-                ToastUtils.show(ClansActivity.this, "Rellena todos los campos", Toast.LENGTH_SHORT);
+                ToastUtils.show(ClanActivity.this, "Rellena todos los campos", Toast.LENGTH_SHORT);
             }
         });
     }
@@ -160,21 +166,21 @@ public class ClansActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
 
                 if (response.isSuccessful()) {
-                    ToastUtils.show(ClansActivity.this, "¡Clan creado! Ya eres miembro.", Toast.LENGTH_SHORT);
+                    ToastUtils.show(ClanActivity.this, "¡Clan creado! Ya eres miembro.", Toast.LENGTH_SHORT);
                     loadClans();
 
                 } else if (response.code() == 409) {
-                    ToastUtils.show(ClansActivity.this, "¡Error: Ya perteneces a un clan! Sal primero.", Toast.LENGTH_LONG);
+                    ToastUtils.show(ClanActivity.this, "¡Error: Ya perteneces a un clan! Sal primero.", Toast.LENGTH_LONG);
 
                 } else {
-                    ToastUtils.show(ClansActivity.this, "Error: Nombre de clan en uso o inválido", Toast.LENGTH_SHORT);
+                    ToastUtils.show(ClanActivity.this, "Error: Nombre de clan en uso o inválido", Toast.LENGTH_SHORT);
                 }
             }
 
             @Override
             public void onFailure(Call<Clan> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                ToastUtils.show(ClansActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT);
+                ToastUtils.show(ClanActivity.this, "Fallo de conexión", Toast.LENGTH_SHORT);
             }
         });
     }

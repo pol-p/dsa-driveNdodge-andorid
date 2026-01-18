@@ -5,14 +5,16 @@ public class UsrRanking {
     private String nombre;
 
     private Integer mejorPuntuacion;
+    private String imagenPerfil;
 
     public UsrRanking() {
     }
 
-    public UsrRanking(String username, String nombre, Integer mejorPuntuacion) {
+    public UsrRanking(String username, String nombre, Integer mejorPuntuacion, String imagenPerfil) {
         this.username = username;
         this.nombre = nombre;
         this.mejorPuntuacion = mejorPuntuacion;
+        this.imagenPerfil = imagenPerfil;
     }
 
     public String getUsername() {
@@ -37,5 +39,13 @@ public class UsrRanking {
 
     public void setMejorPuntuacion(Integer mejorPuntuacion) {
         this.mejorPuntuacion = mejorPuntuacion;
+    }
+
+    public String getImagenPerfil() {
+        return imagenPerfil;
+    }
+
+    public void setImagenPerfil(String imagenPerfil) {
+        this.imagenPerfil = imagenPerfil;
     }
 }

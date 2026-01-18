@@ -63,7 +63,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 selectedAvatar = img;
             }
 
-            Picasso.get().load(BASE_URL_IMG + selectedAvatar).placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).fit().centerCrop().into(ivEditAvatar);
+            Picasso.get().load(BASE_URL_IMG + selectedAvatar).placeholder(R.drawable.logo).error(R.mipmap.ic_launcher_round).fit().centerCrop().into(ivEditAvatar);
 
             // Usamos "" por si llega null para que no falle --> Si n no es null sera n else sera ""
             etNombre.setText(n != null ? n : "");

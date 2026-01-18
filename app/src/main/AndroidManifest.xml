@@ -29,7 +29,9 @@
         <activity android:name=".ui.auth.RegisterActivity" />
         <activity android:name=".ui.auth.LoginActivity" />
         <activity android:name=".ui.shop.ShopActivity" />
-        <activity android:name=".ui.main.PortalPageActivity" />
+        <activity
+            android:name=".ui.main.PortalPageActivity"
+            android:exported="true" />
         <activity android:name=".ui.ranking.ViewRankingActivity" />
         <activity android:name=".ui.profile.ViewProfileActivity" />
         <activity android:name=".ui.inventario.InventarioActivity"/>
@@ -40,6 +42,22 @@
         <activity android:name=".ui.evento.EventosActivity" />
         <activity android:name=".ui.evento.EventDetailActivity" />
         <activity android:name=".ui.clan.ClanRankingActivity" />
+
+        <receiver
+            android:name=".receivers.UnityCoinsReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="edu.upc.dsa_android_DriveNdodge.ACTION_UNITY_COINS" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".receivers.UnityInventoryReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="edu.upc.dsa_android_DriveNdodge.ACTION_UNITY_INVENTORY" />
+            </intent-filter>
+        </receiver>
 
 
     </application>

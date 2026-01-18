@@ -59,14 +59,33 @@ public class ViewProfileActivity extends AppCompatActivity {
 
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, PortalPageActivity.class);
-            startActivity(intent);
-            finish();
+            if (getIntent().getStringExtra("visitUser") != null) {
+                finish();
+            } else {
+                Intent intent = new Intent(this, PortalPageActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
 
         SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-        username = prefs.getString("username", null);
 
+        String sessionUser = prefs.getString("username", null);
+        String visitUser = getIntent().getStringExtra("visitUser");
+
+        if (visitUser != null && !visitUser.isEmpty()) {
+            username = visitUser; // Perfdil de otro
+        } else {
+            username = sessionUser; // Modo Mi Perfil
+        }
+
+        btnEditProfile.setVisibility(View.GONE);
+
+        if (sessionUser != null && username != null) {
+            if (sessionUser.equals(username)) {
+                btnEditProfile.setVisibility(View.VISIBLE);
+            }
+        }
         perfilService = RetrofitClient.getClient().create(PerfilService.class);
 
         if (username != null) {

@@ -110,8 +110,18 @@ public class ClanDetailActivity extends AppCompatActivity {
             public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Usuario> members = response.body();
+
+                    ClanMembersAdapter adapter = new ClanMembersAdapter(members, new ClanMembersAdapter.OnMemberClickListener() {
+                        @Override
+                        public void onMemberClick(String usernameClicked) {
+                            android.content.Intent intent = new android.content.Intent(ClanDetailActivity.this, edu.upc.dsa_android_DriveNdodge.ui.profile.ViewProfileActivity.class);
+                            intent.putExtra("visitUser", usernameClicked); // Pasamos la clave "visitUser"
+                            startActivity(intent);
+                        }
+                    });
+
                     recyclerMembers.setAdapter(
-                            new ClanMembersAdapter(response.body())
+                            adapter
                     );
                     isMember = false;
                     for (Usuario u : members) {

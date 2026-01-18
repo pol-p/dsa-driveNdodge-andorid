@@ -20,7 +20,15 @@ import edu.upc.dsa_android_DriveNdodge.models.Usuario;
 public class ClanMembersAdapter extends RecyclerView.Adapter<ClanMembersAdapter.ViewHolder> {
 
     private final List<Usuario> members;
+    private OnMemberClickListener listener;
 
+    public interface OnMemberClickListener {
+        void onMemberClick(String username);
+    }
+    public ClanMembersAdapter(List<Usuario> members, OnMemberClickListener listener) {
+        this.members = members;
+        this.listener = listener;
+    }
     public ClanMembersAdapter(List<Usuario> members) {
         this.members = members;
     }
@@ -47,6 +55,12 @@ public class ClanMembersAdapter extends RecyclerView.Adapter<ClanMembersAdapter.
         String urlCompleta = baseUrl + "img/avatar/" + nombreImagen;
 
         Picasso.get().load(urlCompleta).placeholder(R.drawable.logo).error(R.drawable.logo).into(holder.ivUserAvatar);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onMemberClick(usuario.getUsername());
+            }
+        });
     }
 
     @Override

@@ -59,6 +59,14 @@
             </intent-filter>
         </receiver>
 
+        <receiver
+            android:name=".receivers.UnityRunCoinsReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="edu.upc.dsa_android_DriveNdodge.ACTION_UNITY_RUN_COINS"/>
+            </intent-filter>
+        </receiver>
+
 
     </application>
 

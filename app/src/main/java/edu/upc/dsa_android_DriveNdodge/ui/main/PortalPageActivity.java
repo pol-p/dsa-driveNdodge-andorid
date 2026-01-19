@@ -233,7 +233,7 @@ public class PortalPageActivity extends AppCompatActivity {
 
                         if (name.contains("magnet") || name.contains("imán") || name.contains("iman")) {
                             magnetCount = it.getCantidad();
-                        } else if (name.contains("shield") || name.contains("escudo")) {
+                        } else if (name.contains("tankcar") || name.contains("escudo")) {
                             shieldCount = it.getCantidad();
                         } else if (name.contains("double") || name.contains("duplic") || name.contains("x2")) {
                             doublerCount = it.getCantidad();

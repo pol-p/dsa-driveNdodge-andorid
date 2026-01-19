@@ -3,6 +3,8 @@ package edu.upc.dsa_android_DriveNdodge.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler; // <--- IMPORTANTE
+import android.os.Looper;  // <--- IMPORTANTE
 import android.util.Log;
 
 import edu.upc.dsa_android_DriveNdodge.api.GameService;
@@ -22,34 +24,31 @@ public class UnityCoinsReceiver extends BroadcastReceiver {
 
         String username = intent.getStringExtra("username");
         int totalCoins = intent.getIntExtra("coins_total", -1);
-        int score = intent.getIntExtra("score", 0);
 
-        Log.d("UnityCoinsReceiver", "Recibido -> User: " + username + " | Score: " + score + " | Coins: " + totalCoins);
+        Log.d("UnityCoinsReceiver", "Recibido -> User: " + username + " | Coins: " + totalCoins);
 
-        if (username == null) return;
+        if (username == null || totalCoins < 0) return;
 
-        if (totalCoins >= 0) {
-            context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
-                    .edit()
-                    .putInt("coins_total_from_unity", totalCoins)
-                    .apply();
-        }
+        context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+                .edit()
+                .putInt("coins_total_from_unity", totalCoins)
+                .apply();
 
-        if (score > 0 || totalCoins >= 0) {
-            enviarPartidaAlBackend(context, username, score, totalCoins);
-        }
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            enviarMonedasAlBackend(username, totalCoins);
+        }, 1000);
     }
 
-    private void enviarPartidaAlBackend(Context context, String username, int score, int coins) {
+    private void enviarMonedasAlBackend(String username, int coins) {
         GameService service = RetrofitClient.getClient().create(GameService.class);
 
-        Partida partida = new Partida(username, score, coins);
+        Partida partida = new Partida(username, 0, coins);
 
-        service.saveGame(partida).enqueue(new Callback<Void>() {
+        service.updateCoins(partida).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Log.i("UnityCoinsReceiver", "¡Puntos (" + score + ") guardados en la nube!");
+                    Log.i("UnityCoinsReceiver", "💰 Monedas (" + coins + ") sincronizadas OK.");
                 } else {
                     Log.e("UnityCoinsReceiver", "Error servidor: " + response.code());
                 }
@@ -57,7 +56,7 @@ public class UnityCoinsReceiver extends BroadcastReceiver {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Log.e("UnityCoinsReceiver", "Fallo de red al guardar partida");
+                Log.e("UnityCoinsReceiver", "Fallo de red al guardar monedas");
             }
         });
     }

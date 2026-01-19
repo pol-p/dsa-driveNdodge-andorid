@@ -11,4 +11,10 @@ public interface GameService {
     Call<Void> saveGame(@Body Partida partida);
     @POST("/v1/game/inventario")
     Call<Void> updateInventario(@Body InventarioRequest request);
+
+    @POST("/v1/game/score")
+    Call<Void> updateScore(@Body Partida partida);
+
+    @POST("/v1/game/coins")
+    Call<Void> updateCoins(@Body Partida partida);
 }
